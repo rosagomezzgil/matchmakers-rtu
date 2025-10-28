@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Layout from "../layout/Layout";
@@ -36,4 +35,5 @@ export default AppRouter;
  * first block of pathes uses the layout, the second block does not
  * parent route: layout, child routes: other pages
  * Route index element is for declaration of main page
+ * no header, no filterbar in landing, sign-in, sign-up pages
  */
