@@ -4,8 +4,9 @@ import Header from "./widgets/Header";
 const Layout = () => (
   <div>
     <Header />
-    <main class name="main" />
-    <Outlet />
+    <main class name="main">
+      <Outlet />
+    </main>
   </div>
 );
 

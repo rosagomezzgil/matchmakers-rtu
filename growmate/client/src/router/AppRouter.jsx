@@ -12,7 +12,7 @@ import FallbackPage from "../pages/FallbackPage";
 
 const AppRouter = () => {
   return (
-    <Router>
+    <Router>-   
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<DiscoveryPage />} />
