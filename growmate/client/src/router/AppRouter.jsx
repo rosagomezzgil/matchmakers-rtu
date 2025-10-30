@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Layout from "../layout/Layout";
-import LandingPage from "../pages/LandingPage";
-import DiscoveryPage from "../pages/DiscoveryPage";
-import ActivityDetailPage from "../pages/ActivityDetailPage";
-import SavedPage from "../pages/SavedPage";
-import CreatePage from "../pages/CreatePage";
-import SignInPage from "../pages/SignInPage";
-import SignUpPage from "../pages/SignUpPage";
-import FallbackPage from "../pages/FallbackPage";
+import Layout from "../components/Layout";
+import LandingPage from "../components/pages/LandingPage.jsx";
+import DiscoveryPage from "../components/pages/DiscoveryPage.jsx";
+import ActivityDetailPage from "../components/pages/ActivityDetail.jsx";
+import SavedPage from "../components/pages/SavedPage.jsx";
+import CreatePage from "../components/pages/CreatePage.jsx";
+import SignInPage from "../components/pages/SignInPage.jsx";
+import SignUpPage from "../components/pages/SignUpPage.jsx";
+import FallbackPage from "../components/pages/FallbackPage.jsx";
 
 const AppRouter = () => {
   return (
-    <Router>-   
+    <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<DiscoveryPage />} />
