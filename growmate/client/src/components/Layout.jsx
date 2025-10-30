@@ -5,7 +5,7 @@ import Header from "./widgets/Header";
 const Layout = () => (
   <div>
     <Header />
-    <main class name="main">
+    <main className="main">
       <Outlet />
     </main>
   </div>
