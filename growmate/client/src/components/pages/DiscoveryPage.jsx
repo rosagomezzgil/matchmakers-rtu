@@ -5,7 +5,6 @@ const DiscoveryPage = () => {
     return (
         <div>
             <h1>Discovery Page</h1>
-            <p>Content upcoming</p>
         </div>
     );
 

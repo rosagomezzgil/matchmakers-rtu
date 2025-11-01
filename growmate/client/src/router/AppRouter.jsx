@@ -5,11 +5,18 @@ import DiscoveryPage from "../components/pages/DiscoveryPage.jsx";
 const AppRouter = () => {
   return (
     <Router>
+      {" "}
       <Routes>
+        {" "}
+        {/* Layout-Routes */}{" "}
         <Route path="/" element={<Layout />}>
-        <Route index element={<DiscoveryPage />} />
-        </Route>
-      </Routes>
+          {" "}
+          <Route index element={<DiscoveryPage />} />{" "}
+          {/* Hier kannst du weitere Child-Routes hinzufügen */}{" "}
+        </Route>{" "}
+        {/* Routen ohne Layout */}{" "}
+        {/* <Route path="/login" element={<LoginPage />} /> */}{" "}
+      </Routes>{" "}
     </Router>
   );
 };
