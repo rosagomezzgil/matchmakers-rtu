@@ -1,25 +1,14 @@
-/*
-import { Router } from "express";
-import { signup, login } from "../controllers/user.controller";
+// User routes: manage the register (signup), login and visualization of information of the user
 
-const r = Router();
-r.post("/signup", signup);
-r.post("/login", login);
+import express from 'express';
+import { createUser, loginUser } from '../controllers/user.controller'; 
 
-export default r;
+const router = express.Router();
 
-*/
+// Route to create an user (register)
+router.post('/signup', createUser);
 
+// Route to signup an user (login)
+router.post('/login', loginUser);
 
-import { Router } from "express";
-import { signup, login } from "../controllers/user.controller";
-
-const r = Router();
-
-// PING DEL ROUTER (debug temporal)
-r.get("/ping", (_req, res) => res.json({ router: true }));
-
-r.post("/signup", signup);
-r.post("/login", login);
-
-export default r;
+export default router;
