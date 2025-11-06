@@ -1,14 +1,12 @@
-// User routes: manage the register (signup), login and visualization of information of the user
-
 import express from 'express';
 import { createUser, loginUser } from '../controllers/user.controller'; 
 
 const router = express.Router();
 
-// Route to create an user (register)
+// Ruta para crear un usuario (registro)
 router.post('/signup', createUser);
 
-// Route to signup an user (login)
+// Ruta para hacer login (acceder)
 router.post('/login', loginUser);
 
-export default router;
+export default router; // Asegúrate de exportar el router
