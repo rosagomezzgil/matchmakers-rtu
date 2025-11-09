@@ -1,12 +1,9 @@
-import express from 'express';
-import { createUser, loginUser } from '../controllers/user.controller'; 
+import { Router } from "express";
+import { signup, login } from "../controllers/user.controller";
 
-const router = express.Router();
+const r = Router();
 
-// Ruta para crear un usuario (registro)
-router.post('/signup', createUser);
+r.post("/signup", signup);
+r.post("/login", login);
 
-// Ruta para hacer login (acceder)
-router.post('/login', loginUser);
-
-export default router; // Asegúrate de exportar el router
+export default r;

@@ -1,20 +1,25 @@
-// import the model in order to create the user
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
+import { createUser, findUserByEmail, IUser } from "../models";
 
-// create a new user (register)
-export const createUser = (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+export async function signup(req: Request, res: Response) {
+  try {
+    const u = await createUser(req.body as Partial<IUser>);
+    res.status(201).json({ ok: true, user: { id: u._id, email: u.email, name: u.name } });
+  } catch (e:any) {
+    res.status(400).json({ ok: false, error: e.message });
+  }
+}
 
-  // aggregate the logic for create an user in the db
-
-  res.status(201).json({ message: 'User created successfully', user: { name, email, password } });
-};
-
-// login 
-export const loginUser = (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
-  // aggregate the logic in order to verificate an email and password
-
-  res.status(200).json({ message: 'User logged in successfully', user: { email } });
-};
+export async function login(req: Request, res: Response) {
+  try {
+    const { email, password } = req.body as { email: string; password: string };
+    const u = await findUserByEmail(email);
+    if (!u) return res.status(401).json({ ok: false, error: "invalid_credentials" });
+    const ok = await u.comparePassword(password);
+    if (!ok) return res.status(401).json({ ok: false, error: "invalid_credentials" });
+    // JWT facultatif ici
+    res.json({ ok: true, user: { id: u._id, email: u.email, name: u.name } });
+  } catch (e:any) {
+    res.status(400).json({ ok: false, error: e.message });
+  }
+}

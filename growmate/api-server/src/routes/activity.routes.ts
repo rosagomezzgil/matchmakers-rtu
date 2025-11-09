@@ -1,10 +1,12 @@
-import express from "express";
-import { getAllActivities, getActivityById, addActivity } from "../controllers/activity.controller";
+// routes/activity.routes.ts
+import { Router } from "express";
+import { list, detail, add } from "../controllers/activity.controller";
 
-const router = express.Router();
 
-router.get("/", getAllActivities);
-router.get("/:id", getActivityById);
-router.post("/add", addActivity);
+const r = Router();
 
-export default router;  // Esto es necesario para poder importar este archivo correctamente
+r.get("/", list);
+r.get("/:id", detail);
+r.post("/add", add);
+
+export default r;

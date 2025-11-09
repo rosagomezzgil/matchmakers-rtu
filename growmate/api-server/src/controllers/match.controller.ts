@@ -1,37 +1,52 @@
 import { Request, Response } from "express";
-import { Match } from "../models/match.model";
-import { Activity } from "../models/activity.model";
+import { addLike, removeLike, findUserLikes } from "../models";
+import { getRecommendedActivities } from "../services/recommend.service";
 
-// /discover → obtiene actividades aleatorias
-export const discover = async (_req: Request, res: Response) => {
+function userIdFrom(req: Request) {
+  // provisoire: support sans auth, accepte ?userId=...
+  return (req as any).user?.id || (req.query.userId as string) || (req.body.userId as string);
+}
+
+export async function like(req: Request, res: Response) {
   try {
-    const activities = await Activity.aggregate([{ $sample: { size: 5 } }]);
-    res.json(activities);
-  } catch {
-    res.status(500).json({ error: "Error al obtener recomendaciones" });
+    const userId = userIdFrom(req);
+    const { activityId, liked = true } = req.body as { activityId: string; liked?: boolean };
+    if (!userId || !activityId) return res.status(400).json({ ok:false, error:"missing_ids" });
+    const m = await addLike(userId, activityId, liked);
+    res.json({ ok: true, match: m });
+  } catch (e:any) {
+    res.status(400).json({ ok:false, error: e.message });
   }
-};
+}
 
-// /like/:activityId → registra un like
-export const likeActivity = async (req: Request, res: Response) => {
+export async function dislike(req: Request, res: Response) {
+  req.body.liked = false;
+  return like(req, res);
+}
+
+export async function unlike(req: Request, res: Response) {
   try {
-    const { userId } = req.body; // suponemos que viene en el body
-    const { activityId } = req.params;
-
-    const match = await Match.create({ userId, activityId, liked: true });
-    res.status(201).json(match);
-  } catch {
-    res.status(400).json({ error: "No se pudo registrar el like" });
+    const userId = userIdFrom(req);
+    const { activityId } = req.body as { activityId: string };
+    if (!userId || !activityId) return res.status(400).json({ ok:false, error:"missing_ids" });
+    await removeLike(userId, activityId);
+    res.json({ ok: true });
+  } catch (e:any) {
+    res.status(400).json({ ok:false, error: e.message });
   }
-};
+}
 
-// /matches → muestra todos los matches
-export const getMatches = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.query;
-    const matches = await Match.find({ userId });
-    res.json(matches);
-  } catch {
-    res.status(500).json({ error: "Error al obtener matches" });
-  }
-};
+export async function likesOfUser(req: Request, res: Response) {
+  const userId = userIdFrom(req);
+  if (!userId) return res.status(400).json({ ok:false, error:"missing_userId" });
+  const rows = await findUserLikes(userId);
+  res.json(rows);
+}
+
+export async function discover(req: Request, res: Response) {
+  const userId = userIdFrom(req);
+  const limit = Number(req.query.limit ?? 10);
+  if (!userId) return res.status(400).json({ ok:false, error:"missing_userId" });
+  const items = await getRecommendedActivities(userId, limit);
+  res.json(items);
+}

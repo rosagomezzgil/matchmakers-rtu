@@ -1,10 +1,14 @@
-import express from "express";
-import { discover, likeActivity, getMatches } from "../controllers/match.controller";
+// routes/match.routes.ts
+import { Router } from "express";
+import { like, dislike, unlike, likesOfUser, discover } from "../controllers/match.controller";
 
-const router = express.Router();
 
-router.get("/discover", discover);
-router.post("/like/:activityId", likeActivity);
-router.get("/matches", getMatches);
+const r = Router();
 
-export default router;  // Esto es necesario para poder importar este archivo correctamente
+r.get("/discover", discover);
+r.get("/likes", likesOfUser);
+r.post("/like", like);
+r.post("/dislike", dislike);
+r.post("/unlike", unlike);
+
+export default r;
