@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "../components/Layout.jsx";
-import DiscoveryPage from "../components/pages/DiscoveryPage.jsx";
+import LandingPage from "../components/pages/LandingPage.jsx";
 import AboutUsPage from "../components/pages/AboutUsPage.jsx";
 import FAQPage from "../components/pages/FAQPage.jsx";
 import ContactsPage from "../components/pages/ContactsPage.jsx";
@@ -14,7 +14,7 @@ const AppRouter = () => {
       <Routes>
         {/* Layout-Routes */}
         <Route path="/" element={<Layout />}>
-        <Route index element={<DiscoveryPage />} />
+        <Route index element={<LandingPage />} />
         <Route path="faq" element={<FAQPage />} />
         <Route path="about" element={<AboutUsPage />} />
         <Route path="contacts" element={<ContactsPage />} />
