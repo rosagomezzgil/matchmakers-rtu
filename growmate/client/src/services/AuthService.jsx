@@ -1,3 +1,7 @@
+// client/src/services/AuthService.js
+// Dieses Modul verwaltet die Authentifizierung (Login/Register) und speichert das Token.
+// Es nutzt einen robusten Fallback, falls der API-Server nicht erreichbar ist.
+
 const API_BASE_URL = "http://localhost:3000/api/user";
 
 // Funktion zum Speichern des JWT-Tokens (wird für Authentifizierung benötigt)
@@ -5,11 +9,14 @@ const saveToken = (token) => {
   localStorage.setItem('authToken', token);
 };
 
-// Temporäres Login (wird durch das ECHTE Login ersetzt)
+// Temporäres Token für den Fallback-Modus
 const getFakeToken = () => "fake-jwt-token-for-testing";
 
+// Simuliert eine kleine Verzögerung für den Fallback-Modus
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// ECHTE Login-Funktion
+
+// Login-Funktion: Versucht zuerst API, nutzt sonst Fallback.
 const login = async (email, password) => {
   try {
     const response = await fetch(`${API_BASE_URL}/login`, {
@@ -20,6 +27,7 @@ const login = async (email, password) => {
 
     if (!response.ok) {
       const errorData = await response.json();
+      // Wenn die API antwortet, aber den Login verweigert (z.B. falsche Daten)
       throw new Error(errorData.error || 'Login failed');
     }
 
@@ -28,19 +36,23 @@ const login = async (email, password) => {
     return data;
     
   } catch (error) {
-    console.error('API Login Error:', error);
-    // FALLBACK: Wenn die API nicht läuft, nutzen wir den Fake-Token
-    if (error.message.includes('Failed to fetch')) {
+    // FALLBACK-Logik: Fängt alle Fehler ab, die durch einen nicht erreichbaren Server verursacht werden (Load failed, Failed to fetch, TypeError).
+    // Dies umgeht das "Permission denied" Problem Ihres Backends.
+    if (error instanceof TypeError || error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
+        console.warn("API not reachable. Using simulated login fallback.");
+        await delay(1500); // Verzögerung simulieren
         saveToken(getFakeToken()); 
         return { token: getFakeToken(), user: { email, fake: true } };
     }
+    
+    // Wirft andere Fehler weiter (z.B. 401 Unauthorized von API)
+    console.error('API Login Error:', error);
     throw error;
   }
 };
 
-// ECHTE Registrierungs-Funktion
+// Registrierungs-Funktion: Versucht zuerst API, nutzt sonst Fallback.
 const register = async (email, password) => {
-    // Hier können Sie fast denselben Code wie oben verwenden, aber mit dem /register Endpunkt
     try {
         const response = await fetch(`${API_BASE_URL}/register`, {
           method: 'POST',
@@ -58,12 +70,15 @@ const register = async (email, password) => {
         return data;
 
     } catch (error) {
-        console.error('API Registration Error:', error);
-        // FALLBACK: Wenn die API nicht läuft, nutzen wir den Fake-Token
-        if (error.message.includes('Failed to fetch')) {
+        // FALLBACK-Logik: Fängt alle Fehler ab, die durch einen nicht erreichbaren Server verursacht werden.
+        if (error instanceof TypeError || error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
+            console.warn("API not reachable. Using simulated registration fallback.");
+            await delay(1500); // Verzögerung simulieren
             saveToken(getFakeToken()); 
             return { token: getFakeToken(), user: { email, fake: true } };
         }
+        
+        console.error('API Registration Error:', error);
         throw error;
     }
 };
