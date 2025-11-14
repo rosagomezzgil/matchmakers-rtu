@@ -61,6 +61,7 @@ export default function DiscoveryPage() {
         status: '',
     });
     const [hoveredFilter, setHoveredFilter] = useState(null);
+    const [closeTimeout, setCloseTimeout] = useState(null);
 
     const handleFilterChange = (name, value) => {
         setFilters(prev => ({
@@ -69,6 +70,30 @@ export default function DiscoveryPage() {
         }));
         // TODO: Später die API-Abfrage hier auslösen
     };
+
+    const handleMouseEnter = (filterName) => {
+        if (closeTimeout) {
+            clearTimeout(closeTimeout);
+            setCloseTimeout(null);
+        }
+        setHoveredFilter(filterName);
+    };
+
+    const handleMouseLeave = () => {
+        const timeout = setTimeout(() => {
+            setHoveredFilter(null);
+        }, 200); // 200ms delay before closing
+        setCloseTimeout(timeout);
+    };
+
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (closeTimeout) {
+                clearTimeout(closeTimeout);
+            }
+        };
+    }, [closeTimeout]);
     
     // Einfache client-seitige Filterung (wird später auf Backend-Abfrage umgestellt)
     const filteredActivities = activities.filter(activity => {
@@ -95,8 +120,8 @@ export default function DiscoveryPage() {
                     <div 
                         key={filter.name} 
                         className="relative group"
-                        onMouseEnter={() => setHoveredFilter(filter.name)}
-                        onMouseLeave={() => setHoveredFilter(null)}
+                        onMouseEnter={() => handleMouseEnter(filter.name)}
+                        onMouseLeave={handleMouseLeave}
                     >
                         <button 
                             className="text-lg font-light uppercase tracking-wider hover:text-cyan-800 transition duration-150"
@@ -106,7 +131,11 @@ export default function DiscoveryPage() {
                         
                         {/* Simuliertes Dropdown (Wird später durch echte Select-Felder ersetzt) */}
                         {hoveredFilter === filter.name && filter.options && (
-                             <div className="absolute left-0 mt-2 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-20">
+                             <div 
+                                className="absolute left-0 mt-1 pt-1 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-20"
+                                onMouseEnter={() => handleMouseEnter(filter.name)}
+                                onMouseLeave={handleMouseLeave}
+                             >
                                 {filter.options.map(option => (
                                     <div 
                                         key={option} 
