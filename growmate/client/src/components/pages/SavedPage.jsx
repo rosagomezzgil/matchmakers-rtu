@@ -1,11 +1,16 @@
 import { ActivityCard } from "../widgets/ActivityCard.jsx"; 
+// Import assets
+import greenImg from "../../assets/green.png";
+import galleryImg from "../../assets/gallery.png";
+import mountainImg from "../../assets/mountain.png";
+import berlinImg from "../../assets/berlin.png";
 
 // Mock-Daten für die gespeicherten Aktivitäten (eine Untermenge der Discovery-Daten)
 const mockSavedActivities = [
-  { id: 1, date: "10", month: "october", title: "VISITING MEZAPARK", category: "culture", imageUrl: "/images/mezapark.jpg" }, 
-  { id: 3, date: "23", month: "october", title: "MUSEUM VISIT", category: "culture", imageUrl: "/images/museum.jpg" },
-  { id: 6, date: "11", month: "november", title: "HIKING THE ALPS", category: "sport", imageUrl: "/images/hiking.jpg" },
-  { id: 8, date: "24", month: "november", title: "CITY TRIP TO BERLIN", category: "travel", imageUrl: "/images/berlin.jpg" },
+  { id: 1, date: "10", month: "october", title: "VISITING MEZAPARK", category: "culture", imageUrl: greenImg }, 
+  { id: 3, date: "23", month: "october", title: "MUSEUM VISIT", category: "culture", imageUrl: galleryImg },
+  { id: 6, date: "11", month: "november", title: "HIKING THE ALPS", category: "sport", imageUrl: mountainImg },
+  { id: 8, date: "24", month: "november", title: "CITY TRIP TO BERLIN", category: "travel", imageUrl: berlinImg },
 ];
 
 export default function SavedPage() {
