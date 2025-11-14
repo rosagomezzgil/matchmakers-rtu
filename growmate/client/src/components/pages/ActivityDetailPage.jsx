@@ -53,11 +53,11 @@ export default function ActivityDetailPage() {
           
           {/* Zusätzliche Aktivitätsinfos (links unten) */}
           <div className="text-sm space-y-1">
-            <p><span className="font-semibold w-24 inline-block">capacity</span>: {activity.capacity} people</p>
-            <p><span className="font-semibold w-24 inline-block">status</span>: {activity.status}</p>
-            <p><span className="font-semibold w-24 inline-block">difficulty</span>: {activity.difficulty}</p>
-            <p><span className="font-semibold w-24 inline-block">created at</span>: {activity.createdAt}</p>
-            <p><span className="font-semibold w-24 inline-block">initialised by</span>: {activity.initialisedBy}</p>
+            <p><span className="font-semibold w-24 inline-block">capacity</span> {activity.capacity} people</p>
+            <p><span className="font-semibold w-24 inline-block">status</span> {activity.status}</p>
+            <p><span className="font-semibold w-24 inline-block">difficulty</span> {activity.difficulty}</p>
+            <p><span className="font-semibold w-24 inline-block">created at</span> {activity.createdAt}</p>
+            <p><span className="font-semibold w-24 inline-block">initialised by</span> {activity.initialisedBy}</p>
           </div>
         </div>
 
