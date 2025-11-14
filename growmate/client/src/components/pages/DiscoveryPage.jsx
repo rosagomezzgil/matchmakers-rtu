@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../src/contexts/AuthContext.jsx';
+// Import assets
+import beachImg from '../../assets/beach.png';
+import berlinImg from '../../assets/berlin.png';
+import galleryImg from '../../assets/gallery.png';
+import skiImg from '../../assets/ski.png';
+import mountainImg from '../../assets/mountain.png';
+import greenImg from '../../assets/green.png';
+import cliffImg from '../../assets/cliff.png';
+import waterImg from '../../assets/water.png';
+import skybarImg from '../../assets/skybar.png';
+import coffeeImg from '../../assets/coffee.png';
+
 // Hier würden wir den ActivityService importieren, den wir als Nächstes erstellen
 
 // Mock-Daten für das erste Design (wird durch API/Fallback ersetzt)
 const mockActivities = [
-  { id: 1, title: "Visiting MezaPark", date: "10th", month: "october", category: "nature", location: "berlin", imageUrl: "https://placehold.co/400x600/1e293b/FFF?text=MezaPark" },
-  { id: 2, title: "Going to the Beach", date: "18th", month: "october", category: "nature", location: "duesseldorf", imageUrl: "https://placehold.co/400x600/94a3b8/FFF?text=Beach+Trip" },
-  { id: 3, title: "Museum Visit", date: "23rd", month: "october", category: "culture", location: "hamburg", imageUrl: "https://placehold.co/400x600/334155/FFF?text=Museum+Visit" },
-  { id: 4, title: "Ski Trip to Austria", date: "28th", month: "october", category: "sport", location: "munich", imageUrl: "https://placehold.co/400x600/475569/FFF?text=Ski+Trip" },
-  { id: 5, title: "Going on a Walk", date: "2nd", month: "november", category: "nature", location: "bremen", imageUrl: "https://placehold.co/400x600/64748b/FFF?text=Walk" },
-  { id: 6, title: "Hiking the Alps", date: "11th", month: "november", category: "nature", location: "hannover", imageUrl: "https://placehold.co/400x600/0f172a/FFF?text=Hiking" },
+  { id: 1, title: "Visiting MezaPark", date: "10th", month: "october", category: "nature", location: "berlin", imageUrl: greenImg },
+  { id: 2, title: "Going to the Beach", date: "18th", month: "october", category: "nature", location: "riga", imageUrl: beachImg },
+  { id: 3, title: "Museum Visit", date: "23rd", month: "october", category: "culture", location: "berlin", imageUrl: galleryImg },
+  { id: 4, title: "Ski Trip to Austria", date: "28th", month: "october", category: "sport", location: "vienna", imageUrl: skiImg },
+  { id: 5, title: "Going on a Walk", date: "2nd", month: "november", category: "nature", location: "riga", imageUrl: waterImg },
+  { id: 6, title: "Hiking the Alps", date: "11th", month: "november", category: "nature", location: "vienna", imageUrl: mountainImg },
   // Weitere Aktivitäten, um das Gitter zu füllen
-  { id: 7, title: "Apres Ski", date: "17th", month: "november", category: "sport", location: "berlin", imageUrl: "https://placehold.co/400x600/525252/FFF?text=Apres+Ski" },
-  { id: 8, title: "City Trip to Berlin", date: "24th", month: "november", category: "travel", location: "duesseldorf", imageUrl: "https://placehold.co/400x600/9ca3af/FFF?text=City+Trip" },
+  { id: 7, title: "Apres Ski", date: "17th", month: "november", category: "sport", location: "vienna", imageUrl: skybarImg },
+  { id: 8, title: "City Trip to Berlin", date: "24th", month: "november", category: "travel", location: "berlin", imageUrl: berlinImg },
 ];
 
 // Einzelne Aktivitätskarte
@@ -28,11 +40,6 @@ const ActivityCard = ({ activity }) => {
                 fontFamily: 'serif' 
             }}
         >
-            {/* Overlay für den Textkontrast. 
-                Das ursprüngliche weiße Overlay, das die Karte weiß gemacht hat, wurde durch ein dunkles ersetzt.
-            */}
-            <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-10 transition duration-300"></div>
-
             {/* Datum / Monat - Textfarbe auf Weiß geändert und Datum größer gemacht */}
             <div className="absolute top-4 right-4 text-center text-white p-2">
                 {/* Entferne 'th', um nur die Zahl groß anzuzeigen, wie im Figma-Design */}
