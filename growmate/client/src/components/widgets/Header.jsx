@@ -27,11 +27,11 @@ const bgColor = isLoggedIn ? "bg-white/30" : "bg-black/30";
   // Auth/Account-Links
   const AuthControls = isLoggedIn ? (
     // Eingeloggt: Saved, Create, Account
-    <div className="flex gap-6 text-sm sm:text-base">
+    <div className="flex gap-6 text-sm sm:text-base items-baseline">
         <NavLink to="/saved" className={getLinkClasses}>Saved</NavLink>
         <NavLink to="/create" className={getLinkClasses}>Create</NavLink>
         {/* Beim Klick auf Account wird der LogOut simuliert, um den Modus zu testen */}
-        <button onClick={signOut} className={`${textColor} opacity-90 hover:opacity-100`}>Account</button> 
+        <button onClick={signOut} className={`leading-none pb-1 ${textColor} opacity-90 hover:opacity-100`}>Account</button> 
     </div>
   ) : (
     // Nicht eingeloggt: Sign In, Sign Up
