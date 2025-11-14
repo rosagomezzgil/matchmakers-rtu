@@ -104,7 +104,7 @@ export default function DiscoveryPage() {
 
     // Dies ist das Layout gemäß dem Figma-Design     
     const filterOptions = [
-        { name: 'location', label: 'location', type: 'text', options: ['berlin', 'düsseldorf', 'hannover', 'bremen', 'hamburg', 'munich'] },
+        { name: 'location', label: 'location', type: 'text', options: ['riga', 'berlin', 'vienna', 'paris', 'amsterdam', 'stockholm', 'copenhagen', 'tallinn', 'vilnius', 'warsaw', 'prague', 'budapest'] },
         { name: 'date', label: 'date', type: 'text', options: ['today', 'tomorrow', 'this week', 'next week', 'this month', 'next month'] },
         { name: 'time', label: 'time', type: 'text', options: ['morning', 'afternoon', 'evening', 'night', 'all day'] },
         { name: 'category', label: 'category', type: 'text', options: ['culture', 'nature', 'sport', 'social', 'travel', 'food'] },
