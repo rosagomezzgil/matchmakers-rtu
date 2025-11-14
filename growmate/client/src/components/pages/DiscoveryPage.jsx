@@ -317,6 +317,10 @@ export default function DiscoveryPage() {
           No activities found matching your criteria.
         </div>
       )}
+      <div className="mt-16 text-center text-gray-600 text-sm">
+        developed with <span className="text-yellow-400">💛</span> by
+        matchmakers from the RTU
+      </div>
     </div>
   );
 }
