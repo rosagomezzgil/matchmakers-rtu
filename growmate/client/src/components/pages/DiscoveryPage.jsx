@@ -60,6 +60,7 @@ export default function DiscoveryPage() {
         category: '',
         status: '',
     });
+    const [hoveredFilter, setHoveredFilter] = useState(null);
 
     const handleFilterChange = (name, value) => {
         setFilters(prev => ({
@@ -91,16 +92,20 @@ export default function DiscoveryPage() {
             {/* Filterzeile */}
             <div className="flex justify-center space-x-8 mb-20 text-gray-800 border-b border-gray-300 pb-2">
                 {filterOptions.map(filter => (
-                    <div key={filter.name} className="relative group">
+                    <div 
+                        key={filter.name} 
+                        className="relative group"
+                        onMouseEnter={() => setHoveredFilter(filter.name)}
+                        onMouseLeave={() => setHoveredFilter(null)}
+                    >
                         <button 
-                            className="text-lg font-light uppercase tracking-wider hover:text-green-600 transition duration-150"
-                            onClick={() => handleFilterChange(filter.name, filters[filter.name] === 'active' ? '' : 'active')}
+                            className="text-lg font-light uppercase tracking-wider hover:text-cyan-800 transition duration-150"
                         >
                             {filter.label} 
                         </button>
                         
                         {/* Simuliertes Dropdown (Wird später durch echte Select-Felder ersetzt) */}
-                        {filters[filter.name] === 'active' && filter.options && (
+                        {hoveredFilter === filter.name && filter.options && (
                              <div className="absolute left-0 mt-2 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-20">
                                 {filter.options.map(option => (
                                     <div 
@@ -109,7 +114,7 @@ export default function DiscoveryPage() {
                                         onClick={() => {
                                             // Hier würden Sie den tatsächlichen Wert setzen
                                             console.log(`Filter ${filter.name} set to: ${option}`);
-                                            handleFilterChange(filter.name, ''); // Schließt das Dropdown vorerst wieder
+                                            handleFilterChange(filter.name, option);
                                         }}
                                     >
                                         {option}
