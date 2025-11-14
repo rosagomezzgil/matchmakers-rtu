@@ -89,7 +89,7 @@ export default function DiscoveryPage() {
         // Hier wurde 'bg-white' und 'text-black' hinzugefügt, um den weißen Hintergrund zu setzen.
         <div className="pt-12 pb-16 min-h-screen bg-white text-black px-4 sm:px-8 lg:px-16">
             {/* Filterzeile */}
-            <div className="flex justify-start space-x-8 mb-12 text-gray-800 border-b border-gray-300 pb-2">
+            <div className="flex justify-center space-x-8 mb-20 text-gray-800 border-b border-gray-300 pb-2">
                 {filterOptions.map(filter => (
                     <div key={filter.name} className="relative group">
                         <button 
