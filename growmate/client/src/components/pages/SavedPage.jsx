@@ -1,24 +1,13 @@
 import { useState } from "react";
 import { ActivityCard } from "../widgets/ActivityCard.jsx"; 
-// Import assets
-import greenImg from "../../assets/green.png";
-import galleryImg from "../../assets/gallery.png";
-import mountainImg from "../../assets/mountain.png";
-import berlinImg from "../../assets/berlin.png";
-
-// Mock-Daten für die gespeicherten Aktivitäten (eine Untermenge der Discovery-Daten)
-const mockSavedActivities = [
-  { id: 1, date: "10", month: "october", title: "VISITING MEZAPARK", category: "culture", imageUrl: greenImg }, 
-  { id: 3, date: "23", month: "october", title: "MUSEUM VISIT", category: "culture", imageUrl: galleryImg },
-  { id: 6, date: "11", month: "november", title: "HIKING THE ALPS", category: "sport", imageUrl: mountainImg },
-  { id: 8, date: "24", month: "november", title: "CITY TRIP TO BERLIN", category: "travel", imageUrl: berlinImg },
-];
+import { useSavedActivities } from "../../contexts/SavedActivitiesContext.jsx";
 
 export default function SavedPage() {
+  const { savedActivities, clearAllActivities } = useSavedActivities();
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // Filtere Aktivitäten basierend auf ausgewählter Kategorie
-  const filteredActivities = mockSavedActivities.filter((activity) => {
+  const filteredActivities = savedActivities.filter((activity) => {
     if (selectedCategory === "all") {
       return true;
     }
@@ -27,6 +16,12 @@ export default function SavedPage() {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+  };
+
+  const handleClearAll = () => {
+    if (window.confirm("Are you sure you want to clear all saved activities?")) {
+      clearAllActivities();
+    }
   };
 
   return (
@@ -66,19 +61,28 @@ export default function SavedPage() {
         </div>
 
         {/* Clear All Button */}
-        <button className="text-sm font-semibold text-red-600 hover:text-red-700 uppercase">
+        <button 
+          onClick={handleClearAll}
+          className="text-sm font-semibold text-red-600 hover:text-red-700 uppercase"
+          disabled={savedActivities.length === 0}
+        >
           Clear All
         </button>
       </div>
 
 
       {/* Aktivitäts-Galerie */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {filteredActivities.map(activity => (
-          // Nutzung von ActivityCard (stellen Sie sicher, dass der Import-Typ passt)
-          <ActivityCard key={activity.id} activity={activity} />
-        ))}
-      </div>
+      {filteredActivities.length === 0 ? (
+        <div className="text-center py-16 text-gray-500">
+          <p>No saved activities yet.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {filteredActivities.map(activity => (
+            <ActivityCard key={activity.id} activity={activity} />
+          ))}
+        </div>
+      )}
       
     </div>
   );

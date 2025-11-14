@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import ActivityDateCard from "../widgets/ActivityDateCard.jsx"; 
 import { mockActivities } from "./DiscoveryPage.jsx";
+import { useSavedActivities } from "../../contexts/SavedActivitiesContext.jsx";
 
 export default function ActivityDetailPage() {
+  const { saveActivity, isActivitySaved, removeActivity } = useSavedActivities();
   const { id } = useParams(); 
   
   // Finde die Activity basierend auf der ID
@@ -34,6 +36,37 @@ export default function ActivityDetailPage() {
     initialisedBy: foundActivity.initialisedBy || "user",
   };
   
+  // Prüfe, ob die Activity bereits gespeichert ist
+  const saved = isActivitySaved(parseInt(id));
+  
+  // Handler für Save/Unsave
+  const handleSave = () => {
+    if (saved) {
+      removeActivity(parseInt(id));
+    } else {
+      // Bereite die Activity für das Speichern vor (nur notwendige Felder)
+      const activityToSave = {
+        id: foundActivity.id,
+        date: cleanDate,
+        month: foundActivity.month,
+        title: foundActivity.title.toUpperCase(),
+        category: foundActivity.category,
+        imageUrl: foundActivity.imageUrl,
+      };
+      saveActivity(activityToSave);
+    }
+  };
+
+  // Handler für Join
+  const handleJoin = () => {
+    if (activity.status === "full") {
+      alert("This activity is already full!");
+    } else {
+      alert(`You joined "${activity.title}"!`);
+      // Hier könnte später die API-Aufruf erfolgen
+    }
+  };
+
   // Farben (aus dem Screenshot: Dunkles Blau/Navy für Join, Gelb für Save)
   const primaryColor = "bg-gray-700 hover:bg-gray-800";
   const saveColor = "bg-yellow-400 hover:bg-yellow-500 text-gray-800";
@@ -86,14 +119,17 @@ export default function ActivityDetailPage() {
           {/* Aktions-Buttons */}
           <div className="flex gap-4">
             <button
+              onClick={handleSave}
               className={`px-6 py-2 rounded font-semibold transition ${saveColor}`}
             >
-              Save activity
+              {saved ? "Unsave activity" : "Save activity"}
             </button>
             <button
+              onClick={handleJoin}
               className={`px-6 py-2 rounded font-semibold text-white transition ${primaryColor}`}
+              disabled={activity.status === "full"}
             >
-              Join activity
+              {activity.status === "full" ? "Activity Full" : "Join activity"}
             </button>
           </div>
         </div>
