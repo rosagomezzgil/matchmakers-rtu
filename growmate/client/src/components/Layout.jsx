@@ -10,7 +10,7 @@ export default function Layout() {
     : "bg-black text-white";
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${isLoggedIn ? 'bg-white text-gray-800' : 'bg-black text-white'}`}>
       <Header isLoggedIn={isLoggedIn} />{" "}
       <main className="pt-20 px-6 max-w-7xl mx-auto">
         <Outlet />
