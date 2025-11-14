@@ -31,23 +31,19 @@ const mockActivities = [
 const ActivityCard = ({ activity }) => {
     return (
         <div 
-            className="group relative w-full aspect-[2/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+            className="group relative w-full aspect-[2/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer font-sans"
             // Hier wird das Bild als Hintergrund gesetzt
             style={{ 
                 backgroundImage: `url(${activity.imageUrl})`, 
                 backgroundSize: 'cover', 
-                backgroundPosition: 'center',
-                fontFamily: 'serif' 
+                backgroundPosition: 'center'
             }}
         >
-            {/* Dunkles Overlay für besseren Kontrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
-            
-            {/* Datum / Monat - Textfarbe auf Weiß geändert und Datum größer gemacht */}
-            <div className="absolute top-4 right-4 text-center text-white p-2 drop-shadow-lg">
-                {/* Entferne 'th', um nur die Zahl groß anzuzeigen, wie im Figma-Design */}
-                <div className="text-4xl font-extrabold font-serif leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{activity.date.replace('th', '')}</div>
-                <div className="text-xs font-light tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{activity.month}</div>
+            {/* Datum / Monat - In der Mitte und sehr groß */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white drop-shadow-lg">
+                {/* Entferne alle Ordinalendungen (th, st, nd, rd), um nur die Zahl groß anzuzeigen */}
+                <div className="text-8xl font-extrabold leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{activity.date.replace(/(th|st|nd|rd)$/i, '')}</div>
+                <div className="text-lg font-bold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] mt-2">{activity.month}</div>
             </div>
 
             {/* Titel und Kategorie am unteren Rand - Textfarbe auf Weiß geändert */}
