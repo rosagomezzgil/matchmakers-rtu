@@ -15,7 +15,7 @@ import cliffImg from "../../assets/cliff.png";
 import swellImg from "../../assets/swell.png";
 import seaImg from "../../assets/sea.png";
 
-const mockActivities = [
+export const mockActivities = [
   {
     id: 1,
     title: "Visiting MezaPark",

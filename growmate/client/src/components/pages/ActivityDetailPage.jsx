@@ -1,28 +1,38 @@
 import { useParams } from "react-router-dom";
 import ActivityDateCard from "../widgets/ActivityDateCard.jsx"; 
-
-// Mock-Daten für die Detailansicht
-const mockActivity = { 
-  id: 2, 
-  date: "18", 
-  month: "october", 
-  title: "GOING TO THE BEACH", 
-  category: "WALKING", 
-  description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.", 
-  time: "16pm", 
-  address: "Nesaules iela 9, Ziemeļu rajons, Rīga, LV-1005", 
-  capacity: 4,
-  status: "full",
-  difficulty: "low",
-  createdAt: "2.10.2025",
-  initialisedBy: "amber",
-  imageUrl: "/images/beach.jpg" 
-};
-
+import { mockActivities } from "./DiscoveryPage.jsx";
 
 export default function ActivityDetailPage() {
   const { id } = useParams(); 
-  const activity = mockActivity; // Nutzung der Mock-Daten für das Layout
+  
+  // Finde die Activity basierend auf der ID
+  const foundActivity = mockActivities.find(activity => activity.id === parseInt(id));
+  
+  // Falls keine Activity gefunden wurde, zeige eine Fehlermeldung
+  if (!foundActivity) {
+    return (
+      <div className="py-8 text-gray-800">
+        <p>Activity not found</p>
+      </div>
+    );
+  }
+  
+  // Erweitere die Activity mit zusätzlichen Feldern für die Detailseite
+  // Bereinige das Datum (entferne th, st, nd, rd)
+  const cleanDate = foundActivity.date ? foundActivity.date.replace(/(th|st|nd|rd)$/i, "") : "";
+  
+  const activity = {
+    ...foundActivity,
+    date: cleanDate, // Bereinigtes Datum ohne Suffix
+    description: foundActivity.description || "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+    time: foundActivity.time || "16:00",
+    address: foundActivity.address || `${foundActivity.location}, Europe`,
+    capacity: foundActivity.capacity || 4,
+    status: foundActivity.status || "open",
+    difficulty: foundActivity.difficulty || "low",
+    createdAt: foundActivity.createdAt || "2.10.2025",
+    initialisedBy: foundActivity.initialisedBy || "user",
+  };
   
   // Farben (aus dem Screenshot: Dunkles Blau/Navy für Join, Gelb für Save)
   const primaryColor = "bg-gray-700 hover:bg-gray-800";
