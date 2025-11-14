@@ -40,17 +40,20 @@ const ActivityCard = ({ activity }) => {
                 fontFamily: 'serif' 
             }}
         >
+            {/* Dunkles Overlay für besseren Kontrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+            
             {/* Datum / Monat - Textfarbe auf Weiß geändert und Datum größer gemacht */}
-            <div className="absolute top-4 right-4 text-center text-white p-2">
+            <div className="absolute top-4 right-4 text-center text-white p-2 drop-shadow-lg">
                 {/* Entferne 'th', um nur die Zahl groß anzuzeigen, wie im Figma-Design */}
-                <div className="text-4xl font-extrabold font-serif leading-none">{activity.date.replace('th', '')}</div>
-                <div className="text-xs font-light tracking-widest uppercase">{activity.month}</div>
+                <div className="text-4xl font-extrabold font-serif leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{activity.date.replace('th', '')}</div>
+                <div className="text-xs font-light tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{activity.month}</div>
             </div>
 
             {/* Titel und Kategorie am unteren Rand - Textfarbe auf Weiß geändert */}
             <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                <div className="text-xs font-medium uppercase tracking-widest opacity-80">{activity.category}</div>
-                <div className="text-xl font-semibold leading-tight mt-1">{activity.title}</div>
+                <div className="text-xs font-medium uppercase tracking-widest drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">{activity.category}</div>
+                <div className="text-xl font-semibold leading-tight mt-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">{activity.title}</div>
             </div>
         </div>
     );
