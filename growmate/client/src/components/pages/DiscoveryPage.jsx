@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../src/contexts/AuthContext.jsx";
 
 import beachImg from "../../assets/beach.png";
@@ -127,15 +128,16 @@ const mockActivities = [
 
 const ActivityCard = ({ activity }) => {
   return (
-    <div
-      className="group relative w-full aspect-[2/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer font-sans"
-      // Hier wird das Bild als Hintergrund gesetzt
-      style={{
-        backgroundImage: `url(${activity.imageUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <Link to={`/activity/${activity.id}`}>
+      <div
+        className="group relative w-full aspect-[2/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer font-sans"
+        // Hier wird das Bild als Hintergrund gesetzt
+        style={{
+          backgroundImage: `url(${activity.imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white">
         <div className="text-8xl font-bold leading-none">
           {activity.date.replace(/(th|st|nd|rd)$/i, "")}
@@ -155,6 +157,7 @@ const ActivityCard = ({ activity }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
