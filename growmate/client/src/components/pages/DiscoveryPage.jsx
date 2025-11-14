@@ -8,11 +8,11 @@ import skiImg from "../../assets/ski.png";
 import mountainImg from "../../assets/mountain.png";
 import greenImg from "../../assets/green.png";
 import waterImg from "../../assets/water.png";
-import skybarImg from "../../assets/skybar.png";
 import coffeeImg from "../../assets/coffee.png";
 import bottomImg from "../../assets/bottom.png";
 import cliffImg from "../../assets/cliff.png";
 import swellImg from "../../assets/swell.png";
+import seaImg from "../../assets/sea.png";
 
 const mockActivities = [
   {
@@ -107,18 +107,18 @@ const mockActivities = [
   },
   {
     id: 7,
-    title: "Apres Ski",
-    date: "17th",
-    month: "november",
+    title: "Mountainbiking",
+    date: "16th",
+    month: "december",
     category: "sport",
-    location: "vienna",
-    imageUrl: skybarImg,
+    location: "austria",
+    imageUrl: seaImg,
   },
   {
     id: 8,
-    title: "City Trip to Berlin",
-    date: "24th",
-    month: "november",
+    title: "Berlin Trip",
+    date: "16th",
+    month: "december",
     category: "travel",
     location: "berlin",
     imageUrl: berlinImg,
