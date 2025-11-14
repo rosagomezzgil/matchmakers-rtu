@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../src/contexts/AuthContext.jsx";
-// Import assets
+
 import beachImg from "../../assets/beach.png";
 import berlinImg from "../../assets/berlin.png";
 import galleryImg from "../../assets/gallery.png";
 import skiImg from "../../assets/ski.png";
 import mountainImg from "../../assets/mountain.png";
 import greenImg from "../../assets/green.png";
-import cliffImg from "../../assets/cliff.png";
 import waterImg from "../../assets/water.png";
 import skybarImg from "../../assets/skybar.png";
 import coffeeImg from "../../assets/coffee.png";
+import bottomImg from "../../assets/bottom.png";
+import cliffImg from "../../assets/cliff.png";
+import swellImg from "../../assets/swell.png";
 
-// Hier würden wir den ActivityService importieren, den wir als Nächstes erstellen
-
-// Mock-Daten für das erste Design (wird durch API/Fallback ersetzt)
 const mockActivities = [
   {
     id: 1,
@@ -53,6 +52,42 @@ const mockActivities = [
     imageUrl: skiImg,
   },
   {
+    id: 10,
+    title: "Sunset at Bottom Bay",
+    date: "14th",
+    month: "november",
+    category: "travel",
+    location: "barbados",
+    imageUrl: bottomImg,
+  },
+  {
+    id: 9,
+    title: "Hike Adventure",
+    date: "6th",
+    month: "november",
+    category: "nature",
+    location: "lisbon",
+    imageUrl: cliffImg,
+  },
+  {
+    id: 11,
+    title: "Surf Session",
+    date: "19th",
+    month: "november",
+    category: "sport",
+    location: "porto",
+    imageUrl: swellImg,
+  },
+  {
+    id: 12,
+    title: "Coffee Date",
+    date: "30th",
+    month: "december",
+    category: "social",
+    location: "zurich",
+    imageUrl: coffeeImg,
+  },
+  {
     id: 5,
     title: "Going on a Walk",
     date: "2nd",
@@ -70,7 +105,6 @@ const mockActivities = [
     location: "vienna",
     imageUrl: mountainImg,
   },
-  // Weitere Aktivitäten, um das Gitter zu füllen
   {
     id: 7,
     title: "Apres Ski",
@@ -91,7 +125,6 @@ const mockActivities = [
   },
 ];
 
-// Einzelne Aktivitätskarte
 const ActivityCard = ({ activity }) => {
   return (
     <div
