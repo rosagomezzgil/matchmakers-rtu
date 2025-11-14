@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ActivityCard } from "../widgets/ActivityCard.jsx"; 
 // Import assets
 import greenImg from "../../assets/green.png";
@@ -14,6 +15,20 @@ const mockSavedActivities = [
 ];
 
 export default function SavedPage() {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // Filtere Aktivitäten basierend auf ausgewählter Kategorie
+  const filteredActivities = mockSavedActivities.filter((activity) => {
+    if (selectedCategory === "all") {
+      return true;
+    }
+    return activity.category.toLowerCase() === selectedCategory.toLowerCase();
+  });
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div className="py-8">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Saved Activities</h1>
@@ -22,12 +37,32 @@ export default function SavedPage() {
       */}
       <div className="flex justify-between items-center mb-10 border-b border-gray-300 pb-4">
         
-        {/* Kategorien-Filter (Nur einfache Buttons simuliert) */}
+        {/* Kategorien-Filter */}
         <div className="flex gap-4 text-sm sm:text-base">
-          <button className="font-semibold text-gray-800 border-b-2 border-gray-800 pb-1">All</button>
-          <button className="text-gray-500 hover:text-gray-800">Culture</button>
-          <button className="text-gray-500 hover:text-gray-800">Nature</button>
-          <button className="text-gray-500 hover:text-gray-800">Sport</button>
+          <button 
+            onClick={() => handleCategoryClick("all")}
+            className={`pb-1 ${selectedCategory === "all" ? "font-semibold text-gray-800 border-b-2 border-gray-800" : "text-gray-500 hover:text-gray-800"}`}
+          >
+            All
+          </button>
+          <button 
+            onClick={() => handleCategoryClick("culture")}
+            className={`pb-1 ${selectedCategory === "culture" ? "font-semibold text-gray-800 border-b-2 border-gray-800" : "text-gray-500 hover:text-gray-800"}`}
+          >
+            Culture
+          </button>
+          <button 
+            onClick={() => handleCategoryClick("nature")}
+            className={`pb-1 ${selectedCategory === "nature" ? "font-semibold text-gray-800 border-b-2 border-gray-800" : "text-gray-500 hover:text-gray-800"}`}
+          >
+            Nature
+          </button>
+          <button 
+            onClick={() => handleCategoryClick("sport")}
+            className={`pb-1 ${selectedCategory === "sport" ? "font-semibold text-gray-800 border-b-2 border-gray-800" : "text-gray-500 hover:text-gray-800"}`}
+          >
+            Sport
+          </button>
         </div>
 
         {/* Clear All Button */}
@@ -39,7 +74,7 @@ export default function SavedPage() {
 
       {/* Aktivitäts-Galerie */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {mockSavedActivities.map(activity => (
+        {filteredActivities.map(activity => (
           // Nutzung von ActivityCard (stellen Sie sicher, dass der Import-Typ passt)
           <ActivityCard key={activity.id} activity={activity} />
         ))}

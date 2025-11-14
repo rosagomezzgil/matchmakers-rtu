@@ -208,7 +208,18 @@ export default function DiscoveryPage() {
 
   // Einfache client-seitige Filterung (wird später auf Backend-Abfrage umgestellt)
   const filteredActivities = activities.filter((activity) => {
-    // Hier würden wir die Filterlogik implementieren, sobald wir den ActivityService haben
+    // Filter nach Kategorie
+    if (filters.category && activity.category.toLowerCase() !== filters.category.toLowerCase()) {
+      return false;
+    }
+    // Filter nach Location
+    if (filters.location && activity.location.toLowerCase() !== filters.location.toLowerCase()) {
+      return false;
+    }
+    // Filter nach Status (falls vorhanden)
+    if (filters.status && activity.status && activity.status.toLowerCase() !== filters.status.toLowerCase()) {
+      return false;
+    }
     return true;
   });
 
