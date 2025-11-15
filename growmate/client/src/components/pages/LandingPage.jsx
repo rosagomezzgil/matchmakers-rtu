@@ -37,7 +37,7 @@ export default function LandingPage() {
 
           <Link
             to="/signup"
-            className="px-6 py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-all"
+            className="px-6 py-2 rounded-full bg-slate-400 hover:bg-sky-700 text-white font-semibold transition-all"
           >
             Register
           </Link>
