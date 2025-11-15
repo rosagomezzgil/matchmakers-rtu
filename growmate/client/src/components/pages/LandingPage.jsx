@@ -27,7 +27,7 @@ export default function LandingPage() {
           </p>
         </div>
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-auto pb-20">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-auto pb-80">
           <Link
             to="/signin"
             className="px-6 py-2 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all"
