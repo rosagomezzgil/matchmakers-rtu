@@ -9,7 +9,7 @@ export default function ContactsPage() {
 
       <div className="space-y-4 text-lg">
         <p>
-          📧 <span className="text-green-400">support@growmate.io</span>
+          📧 <span className="text">support@growmate.io</span>
         </p>
         <p>📍 Riga, Latvia</p>
         <p> +371 421 44278</p>
