@@ -86,11 +86,11 @@ export default function ActivityDetailPage() {
           
           {/* Zusätzliche Aktivitätsinfos (links unten) */}
           <div className="text-sm space-y-1">
-            <p><span className="font-semibold w-24 inline-block">capacity</span> {activity.capacity} people</p>
-            <p><span className="font-semibold w-24 inline-block">status</span> {activity.status}</p>
-            <p><span className="font-semibold w-24 inline-block">difficulty</span> {activity.difficulty}</p>
-            <p><span className="font-semibold w-24 inline-block">created at</span> {activity.createdAt}</p>
-            <p><span className="font-semibold w-24 inline-block">initialised by</span> {activity.initialisedBy}</p>
+            <p className="flex justify-between"><span className="font-semibold">capacity</span><span>{activity.capacity} people</span></p>
+            <p className="flex justify-between"><span className="font-semibold">status</span><span>{activity.status}</span></p>
+            <p className="flex justify-between"><span className="font-semibold">difficulty</span><span>{activity.difficulty}</span></p>
+            <p className="flex justify-between"><span className="font-semibold">created at</span><span>{activity.createdAt}</span></p>
+            <p className="flex justify-between"><span className="font-semibold">initialised by</span><span>{activity.initialisedBy}</span></p>
           </div>
         </div>
 
