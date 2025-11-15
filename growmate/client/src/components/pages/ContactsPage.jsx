@@ -12,7 +12,7 @@ export default function ContactsPage() {
           📧 <span className="text-green-400">support@growmate.io</span>
         </p>
         <p>📍 Riga, Latvia</p>
-        <p>☎️ +371 421 44278</p>
+        <p> +371 421 44278</p>
       </div>
 
       <p className="mt-12 text-gray-400 text-sm max-w-xl">

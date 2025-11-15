@@ -1,10 +1,12 @@
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext.jsx"; 
 
 const link = (isActive, textColorClass, activeBorderColor) =>
   `leading-none ${textColorClass} ` +
   (isActive ? `border-b pb-1 ${activeBorderColor}` : "opacity-90 hover:opacity-100");
 
 export default function Header({ isLoggedIn }) {
+const { signOut } = useAuth();
 
 const bgColor = isLoggedIn ? "bg-white/30" : "bg-black/30";
   const textColor = isLoggedIn ? "text-gray-800" : "text-white";
@@ -28,7 +30,8 @@ const bgColor = isLoggedIn ? "bg-white/30" : "bg-black/30";
     <div className="flex gap-6 text-sm sm:text-base items-baseline">
         <NavLink to="/saved" className={getLinkClasses}>Saved</NavLink>
         <NavLink to="/create" className={getLinkClasses}>Create</NavLink>
-        <NavLink to="/account" className={getLinkClasses}>Account</NavLink>
+        {/* Beim Klick auf Account wird der LogOut simuliert, um den Modus zu testen */}
+        <button onClick={signOut} className={`leading-none pb-1 ${textColor} opacity-90 hover:opacity-100`}>Account</button> 
     </div>
   ) : (
     // Nicht eingeloggt: Sign In, Sign Up

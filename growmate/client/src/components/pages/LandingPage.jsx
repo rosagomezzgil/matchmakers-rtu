@@ -18,7 +18,7 @@ export default function LandingPage() {
       {/* Inhalt */}
       <div className="relative z-10 text-center">
         <h1 className="text-5xl font-bold mb-4">Welcome to GrowMate</h1>
-        <p className="text-lg opacity-90 max-w-xl mx-auto">
+        <p className="text-lg opacity-90 max-w-xl mx-auto mb-16">
           Find activitys, meet new people and grow together.
         </p>
         {/* Buttons */}

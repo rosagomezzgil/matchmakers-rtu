@@ -11,7 +11,6 @@ import ActivityDetailPage from "../components/pages/ActivityDetailPage.jsx";
 import DiscoveryPage from "../components/pages/DiscoveryPage.jsx"; 
 import SavedPage from "../components/pages/SavedPage.jsx"; 
 import CreatePage from "../components/pages/CreatePage.jsx"; 
-import AccountPage from "../components/pages/AccountPage.jsx"; 
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 // Komponente zur Umschaltung: / zeigt entweder Landing oder Discovery
@@ -35,11 +34,10 @@ const AppRouter = () => {
           {/* Index-Route: Umschaltung Landing/Discovery */}
           <Route index element={<HomeRoute />} /> 
           
-          {/* Eingeloggte Routen: Saved, Create, Activity Detail, Account */}
+          {/* Eingeloggte Routen: Saved, Create, Activity Detail */}
           <Route path="saved" element={<SavedPage />} /> 
           <Route path="create" element={<CreatePage />} /> {/* <<< PLATZHALTER ENTFERNT */}
-          <Route path="activity/:id" element={<ActivityDetailPage />} />
-          <Route path="account" element={<AccountPage />} /> 
+          <Route path="activity/:id" element={<ActivityDetailPage />} /> 
 
           {/* Allgemeine Routen mit Layout */}
           <Route path="faq" element={<FAQPage />} />

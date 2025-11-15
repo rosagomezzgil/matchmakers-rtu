@@ -24,7 +24,7 @@ export default function FAQPage() {
         <div>
           <h2 className="text-2xl font-semibold mb-2">How do I create an activity?</h2>
           <p className="text-gray-300">
-            Simply sign in, click <span className="text-green-400">“Create Activity”</span>,
+            Simply sign in, click <span className="text">“Create Activity”</span>,
             and add details such as location, date, description, and participant limit.
           </p>
         </div>
