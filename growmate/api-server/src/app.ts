@@ -11,6 +11,11 @@ dotenv.config();
 
 const app = express();
 
+app.get('/api/ping', (req, res) => {
+  res.json({ ok: true, msg: "pong" });
+});
+
+
 app.use(cors({
   origin: "http://localhost:5173", // or the appropriate origin
   credentials: true
@@ -52,3 +57,8 @@ connectDB(uri).then(() => {
   console.error("Mongo error", err);
   process.exit(1);
 });
+
+app.get('/api/ping', (req, res) => {
+  res.json({ ok: true, msg: "pong" });
+});
+
