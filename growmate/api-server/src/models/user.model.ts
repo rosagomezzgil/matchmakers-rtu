@@ -50,15 +50,22 @@ export const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>(
 
 // ===== Model helpers =====
 export async function createUser(data: Partial<IUser>) {
-  if (!data?.name || !data?.email || !data?.password) {
-    throw new Error("Missing required fields: name, email, password");
+  if (!data?.email || !data?.password) {
+    throw new Error("Missing required fields: email, password");
   }
-  const exists = await User.findOne({ email: data.email });
+
+  const normalizedEmail = data.email.trim().toLowerCase();
+  const exists = await User.findOne({ email: normalizedEmail });
   if (exists) throw new Error("Email already registered");
 
+  const derivedName =
+    data.name?.trim() ||
+    normalizedEmail.split("@")[0] ||
+    "Growmate User";
+
   const user = new User({
-    name: data.name,
-    email: data.email,
+    name: derivedName,
+    email: normalizedEmail,
     password: data.password,
     age: data.age,
     city: data.city ?? "",
@@ -70,7 +77,7 @@ export async function createUser(data: Partial<IUser>) {
 }
 
 export async function findUserByEmail(email: string) {
-  return User.findOne({ email });
+  return User.findOne({ email: email.trim().toLowerCase() });
 }
 
 export async function updatePreferences(userId: string, prefs: string[]) {
