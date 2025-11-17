@@ -2,85 +2,59 @@
 // Dieses Modul verwaltet die Authentifizierung (Login/Register) und speichert das Token.
 // Es nutzt einen robusten Fallback, falls der API-Server nicht erreichbar ist.
 
-const API_BASE_URL = "http://localhost:3000/api/user";
+const API_BASE_URL = `${import.meta.env.VITE_API_URL ?? "http://localhost:3000"}/api/user`;
 
 // Funktion zum Speichern des JWT-Tokens (wird für Authentifizierung benötigt)
 const saveToken = (token) => {
   localStorage.setItem('authToken', token);
 };
 
-// Temporäres Token für den Fallback-Modus
-const getFakeToken = () => "fake-jwt-token-for-testing";
-
-// Simuliert eine kleine Verzögerung für den Fallback-Modus
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-
-// Login-Funktion: Versucht zuerst API, nutzt sonst Fallback.
+// Login-Funktion: ruft die API auf und speichert den erhaltenen Token.
 const login = async (email, password) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+  const response = await fetch(`${API_BASE_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
 
-    if (!response.ok) {
+  if (!response.ok) {
+    let errorMessage = "Login failed";
+    try {
       const errorData = await response.json();
-      // Wenn die API antwortet, aber den Login verweigert (z.B. falsche Daten)
-      throw new Error(errorData.error || 'Login failed');
+      errorMessage = errorData.error || errorMessage;
+    } catch (err) {
+      console.error("Failed to parse login error response", err);
     }
-
-    const data = await response.json();
-    saveToken(data.token); // Speichert den JWT-Token
-    return data;
-    
-  } catch (error) {
-    // FALLBACK-Logik: Fängt alle Fehler ab, die durch einen nicht erreichbaren Server verursacht werden (Load failed, Failed to fetch, TypeError).
-    // Dies umgeht das "Permission denied" Problem Ihres Backends.
-    if (error instanceof TypeError || error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
-        console.warn("API not reachable. Using simulated login fallback.");
-        await delay(1500); // Verzögerung simulieren
-        saveToken(getFakeToken()); 
-        return { token: getFakeToken(), user: { email, fake: true } };
-    }
-    
-    // Wirft andere Fehler weiter (z.B. 401 Unauthorized von API)
-    console.error('API Login Error:', error);
-    throw error;
+    throw new Error(errorMessage);
   }
+
+  const data = await response.json();
+  saveToken(data.token);
+  return data;
 };
 
-// Registrierungs-Funktion: Versucht zuerst API, nutzt sonst Fallback.
+// Registrierungs-Funktion: ruft die API auf und speichert den erhaltenen Token.
 const register = async (email, password) => {
+  const response = await fetch(`${API_BASE_URL}/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    let errorMessage = "Registration failed";
     try {
-        const response = await fetch(`${API_BASE_URL}/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-    
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Registration failed');
-        }
-
-        const data = await response.json();
-        saveToken(data.token); 
-        return data;
-
-    } catch (error) {
-        // FALLBACK-Logik: Fängt alle Fehler ab, die durch einen nicht erreichbaren Server verursacht werden.
-        if (error instanceof TypeError || error.message.includes('Failed to fetch') || error.message.includes('Load failed')) {
-            console.warn("API not reachable. Using simulated registration fallback.");
-            await delay(1500); // Verzögerung simulieren
-            saveToken(getFakeToken()); 
-            return { token: getFakeToken(), user: { email, fake: true } };
-        }
-        
-        console.error('API Registration Error:', error);
-        throw error;
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorMessage;
+    } catch (err) {
+      console.error("Failed to parse registration error response", err);
     }
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  saveToken(data.token);
+  return data;
 };
 
 const logout = () => {

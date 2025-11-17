@@ -1,15 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import AuthService from '../services/AuthService'; // <<< NEU
+import React, { createContext, useContext, useState } from 'react';
+import AuthService from '../services/AuthService';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-// Initialisiert den Login-Status basierend auf einem vorhandenen Token
-const initialIsLoggedIn = !!AuthService.getCurrentUserToken();
-
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,16 +15,14 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError(null);
     try {
-      // Wenn API funktioniert, wird der Token gespeichert
       await AuthService.login(email, password); 
       setIsLoggedIn(true);
+      return { ok: true };
     } catch (err) {
       setError(err.message);
-      // Wenn der Fallback im AuthService genutzt wurde, wird der State trotzdem true
-      if (AuthService.getCurrentUserToken()) {
-         setIsLoggedIn(true); 
-      }
       console.error('Login Error:', err);
+      setIsLoggedIn(false);
+      return { ok: false, error: err.message };
     } finally {
       setLoading(false);
     }
@@ -40,12 +35,12 @@ export function AuthProvider({ children }) {
     try {
       await AuthService.register(email, password);
       setIsLoggedIn(true);
+      return { ok: true };
     } catch (err) {
       setError(err.message);
-      if (AuthService.getCurrentUserToken()) {
-         setIsLoggedIn(true); 
-      }
+      setIsLoggedIn(false);
       console.error('Registration Error:', err);
+      return { ok: false, error: err.message };
     } finally {
       setLoading(false);
     }
@@ -59,12 +54,6 @@ export function AuthProvider({ children }) {
     // navigate('/'); 
   };
   
-  // Überprüft beim Laden, ob ein Token vorhanden ist
-  useEffect(() => {
-      setIsLoggedIn(!!AuthService.getCurrentUserToken());
-  }, []);
-
-
   const value = {
     isLoggedIn,
     loading,

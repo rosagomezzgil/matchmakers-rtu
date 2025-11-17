@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx"; 
-import React, { useState } from 'react'; // NEU: useState importieren
-import AuthService from '../../services/AuthService'; // NEU: AuthService für Token-Check
+import React, { useState } from 'react';
 
 export default function SignUpPage() {
   const { signUp, loading, error } = useAuth(); 
@@ -20,11 +19,9 @@ export default function SignUpPage() {
       return;
     }
     
-    await signUp(email, password);
-    
-    // Nach erfolgreicher Registrierung/Login navigieren
-    if (AuthService.getCurrentUserToken()) { 
-        navigate("/"); 
+    const result = await signUp(email, password);
+    if (result?.ok) {
+      navigate("/");
     }
   };
 

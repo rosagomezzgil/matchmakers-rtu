@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx"; 
-import React, { useState } from 'react'; // NEU: useState importieren
+import React, { useState } from 'react';
 
 export default function SignInPage() {
   const { signIn, loading, error } = useAuth(); // 'error' und 'loading' verwenden
@@ -10,9 +10,8 @@ export default function SignInPage() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    await signIn(email, password);
-    // Nach erfolgreichem Login (unabhängig davon, ob es ein Fake-Login war), navigieren
-    if (AuthService.getCurrentUserToken()) { // Prüfen, ob ein Token gesetzt wurde
+    const result = await signIn(email, password);
+    if (result?.ok) {
         navigate("/"); 
     }
   };
