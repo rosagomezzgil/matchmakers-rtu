@@ -131,7 +131,6 @@ const ActivityCard = ({ activity }) => {
     <Link to={`/activity/${activity.id}`}>
       <div
         className="group relative w-full aspect-[2/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer font-sans"
-        // Hier wird das Bild als Hintergrund gesetzt
         style={{
           backgroundImage: `url(${activity.imageUrl})`,
           backgroundSize: "cover",
