@@ -16,18 +16,32 @@ export function SavedActivitiesProvider({ children }) {
     localStorage.setItem('savedActivities', JSON.stringify(savedActivities));
   }, [savedActivities]);
 
+  const normalizeId = (value) => {
+    if (!value && value !== 0) return "";
+    return value.toString();
+  };
+
   const saveActivity = (activity) => {
     // Prüfe, ob die Activity bereits gespeichert ist
-    const isAlreadySaved = savedActivities.some(saved => saved.id === activity.id);
+    const normalizedId = normalizeId(activity.id);
+    const isAlreadySaved = savedActivities.some(
+      (saved) => normalizeId(saved.id) === normalizedId
+    );
     if (!isAlreadySaved) {
-      setSavedActivities(prev => [...prev, activity]);
+      setSavedActivities((prev) => [
+        ...prev,
+        { ...activity, id: normalizedId },
+      ]);
       return true; // Erfolgreich gespeichert
     }
     return false; // Bereits gespeichert
   };
 
   const removeActivity = (activityId) => {
-    setSavedActivities(prev => prev.filter(activity => activity.id !== activityId));
+    const normalizedId = normalizeId(activityId);
+    setSavedActivities((prev) =>
+      prev.filter((activity) => normalizeId(activity.id) !== normalizedId)
+    );
   };
 
   const clearAllActivities = () => {
@@ -35,7 +49,10 @@ export function SavedActivitiesProvider({ children }) {
   };
 
   const isActivitySaved = (activityId) => {
-    return savedActivities.some(activity => activity.id === activityId);
+    const normalizedId = normalizeId(activityId);
+    return savedActivities.some(
+      (activity) => normalizeId(activity.id) === normalizedId
+    );
   };
 
   const value = {

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../src/contexts/AuthContext.jsx";
 
 import beachImg from "../../assets/beach.png";
 import berlinImg from "../../assets/berlin.png";
@@ -15,116 +14,63 @@ import cliffImg from "../../assets/cliff.png";
 import swellImg from "../../assets/swell.png";
 import seaImg from "../../assets/sea.png";
 
-export const mockActivities = [
-  {
-    id: 1,
-    title: "Visiting MezaPark",
-    date: "10th",
-    month: "october",
-    category: "nature",
-    location: "berlin",
-    imageUrl: greenImg,
-  },
-  {
-    id: 2,
-    title: "Going to the Beach",
-    date: "18th",
-    month: "october",
-    category: "nature",
-    location: "riga",
-    imageUrl: beachImg,
-  },
-  {
-    id: 3,
-    title: "Museum Visit",
-    date: "23rd",
-    month: "october",
-    category: "culture",
-    location: "berlin",
-    imageUrl: galleryImg,
-  },
-  {
-    id: 4,
-    title: "Ski Trip to Austria",
-    date: "28th",
-    month: "october",
-    category: "sport",
-    location: "vienna",
-    imageUrl: skiImg,
-  },
-  {
-    id: 10,
-    title: "Sunset at Bottom Bay",
-    date: "14th",
-    month: "november",
-    category: "travel",
-    location: "barbados",
-    imageUrl: bottomImg,
-  },
-  {
-    id: 9,
-    title: "Hike Adventure",
-    date: "6th",
-    month: "november",
-    category: "nature",
-    location: "lisbon",
-    imageUrl: cliffImg,
-  },
-  {
-    id: 11,
-    title: "Surf Session",
-    date: "19th",
-    month: "november",
-    category: "sport",
-    location: "porto",
-    imageUrl: swellImg,
-  },
-  {
-    id: 12,
-    title: "Coffee Date",
-    date: "30th",
-    month: "december",
-    category: "social",
-    location: "zurich",
-    imageUrl: coffeeImg,
-  },
-  {
-    id: 5,
-    title: "Going on a Walk",
-    date: "2nd",
-    month: "november",
-    category: "nature",
-    location: "riga",
-    imageUrl: waterImg,
-  },
-  {
-    id: 6,
-    title: "Hiking the Alps",
-    date: "11th",
-    month: "november",
-    category: "nature",
-    location: "vienna",
-    imageUrl: mountainImg,
-  },
-  {
-    id: 7,
-    title: "Mountainbiking",
-    date: "16th",
-    month: "december",
-    category: "sport",
-    location: "austria",
-    imageUrl: seaImg,
-  },
-  {
-    id: 8,
-    title: "Berlin Trip",
-    date: "16th",
-    month: "december",
-    category: "travel",
-    location: "berlin",
-    imageUrl: berlinImg,
-  },
-];
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+
+const activityImages = {
+  beach: beachImg,
+  berlin: berlinImg,
+  gallery: galleryImg,
+  ski: skiImg,
+  mountain: mountainImg,
+  green: greenImg,
+  water: waterImg,
+  coffee: coffeeImg,
+  bottom: bottomImg,
+  cliff: cliffImg,
+  swell: swellImg,
+  sea: seaImg,
+};
+
+const formatDaySuffix = (day) => {
+  if (day >= 11 && day <= 13) return `${day}th`;
+  const lastDigit = day % 10;
+  switch (lastDigit) {
+    case 1:
+      return `${day}st`;
+    case 2:
+      return `${day}nd`;
+    case 3:
+      return `${day}rd`;
+    default:
+      return `${day}th`;
+  }
+};
+
+const transformActivity = (raw) => {
+  if (!raw) return null;
+  const date = raw.date ? parseInt(raw.date, 10) : null;
+  const month = raw.month || null;
+  const parsedDate = raw.date_time ? new Date(raw.date_time) : null;
+
+  const derivedDay = parsedDate ? parsedDate.getUTCDate() : date;
+  const derivedMonth = parsedDate
+    ? parsedDate.toLocaleString("en-US", { month: "long" }).toLowerCase()
+    : month;
+
+  return {
+    id: raw._id || raw.id,
+    title: raw.title,
+    category: raw.category,
+    location: raw.location,
+    status: raw.status ?? "open",
+    month: derivedMonth ?? "",
+    date: derivedDay ? formatDaySuffix(derivedDay) : "",
+    imageUrl:
+      raw.imageUrl ||
+      (raw.imageKey ? activityImages[raw.imageKey] : galleryImg),
+    description: raw.description ?? "",
+  };
+};
 
 const ActivityCard = ({ activity }) => {
   return (
@@ -163,7 +109,9 @@ const ActivityCard = ({ activity }) => {
 
 // Hauptkomponente: DiscoveryPage
 export default function DiscoveryPage() {
-  const [activities, setActivities] = useState(mockActivities);
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     location: "",
     date: "",
@@ -179,7 +127,6 @@ export default function DiscoveryPage() {
       ...prev,
       [name]: value,
     }));
-    // TODO: Später die API-Abfrage hier auslösen
   };
 
   const handleMouseEnter = (filterName) => {
@@ -197,6 +144,43 @@ export default function DiscoveryPage() {
     setCloseTimeout(timeout);
   };
 
+  // Fetch activities from API
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadActivities = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/activity`, {
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          throw new Error("Failed to load activities");
+        }
+        const data = await res.json();
+        const mapped = data
+          .map((item) => transformActivity(item))
+          .filter(Boolean);
+        setActivities(mapped);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error("Activity fetch error:", err);
+          setError(err.message);
+          setActivities([]);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadActivities();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
@@ -207,21 +191,30 @@ export default function DiscoveryPage() {
   }, [closeTimeout]);
 
   // Einfache client-seitige Filterung (wird später auf Backend-Abfrage umgestellt)
-  const filteredActivities = activities.filter((activity) => {
-    // Filter nach Kategorie
-    if (filters.category && activity.category.toLowerCase() !== filters.category.toLowerCase()) {
-      return false;
-    }
-    // Filter nach Location
-    if (filters.location && activity.location.toLowerCase() !== filters.location.toLowerCase()) {
-      return false;
-    }
-    // Filter nach Status (falls vorhanden)
-    if (filters.status && activity.status && activity.status.toLowerCase() !== filters.status.toLowerCase()) {
-      return false;
-    }
-    return true;
-  });
+  const filteredActivities = useMemo(() => {
+    return activities.filter((activity) => {
+      if (
+        filters.category &&
+        activity.category.toLowerCase() !== filters.category.toLowerCase()
+      ) {
+        return false;
+      }
+      if (
+        filters.location &&
+        activity.location.toLowerCase() !== filters.location.toLowerCase()
+      ) {
+        return false;
+      }
+      if (
+        filters.status &&
+        activity.status &&
+        activity.status.toLowerCase() !== filters.status.toLowerCase()
+      ) {
+        return false;
+      }
+      return true;
+    });
+  }, [activities, filters]);
 
   // Dies ist das Layout gemäß dem Figma-Design
   const filterOptions = [
@@ -319,17 +312,33 @@ export default function DiscoveryPage() {
         ))}
       </div>
 
-      {/* Aktivitäts-Gitter */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-        {filteredActivities.map((activity) => (
-          <ActivityCard key={activity.id} activity={activity} />
-        ))}
-      </div>
-
-      {filteredActivities.length === 0 && (
+      {loading && (
         <div className="text-center py-16 text-gray-500 text-xl">
-          No activities found matching your criteria.
+          Loading activities...
         </div>
+      )}
+
+      {error && (
+        <div className="text-center py-16 text-red-500 text-xl">
+          {error} — add the seed data from `data/mock-activities.json` to your
+          database or try again later.
+        </div>
+      )}
+
+      {!loading && !error && (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+            {filteredActivities.map((activity) => (
+              <ActivityCard key={activity.id} activity={activity} />
+            ))}
+          </div>
+
+          {filteredActivities.length === 0 && (
+            <div className="text-center py-16 text-gray-500 text-xl">
+              No activities found matching your criteria.
+            </div>
+          )}
+        </>
       )}
     </div>
   );
