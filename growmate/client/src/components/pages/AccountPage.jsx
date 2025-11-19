@@ -62,9 +62,7 @@ export default function AccountPage() {
           <h2 className="text-xl font-semibold mb-6">Profile Information</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Left Column */}
             <div className="space-y-4">
-              {/* Name */}
               <div>
                 <label className="block text-sm font-medium mb-1">Name</label>
                 <input
@@ -75,7 +73,6 @@ export default function AccountPage() {
                 />
               </div>
 
-              {/* Email */}
               <div>
                 <label className="block text-sm font-medium mb-1">Email</label>
                 <input
@@ -86,7 +83,6 @@ export default function AccountPage() {
                 />
               </div>
 
-              {/* Password */}
               <div>
                 <label className="block text-sm font-medium mb-1">Password</label>
                 <input
@@ -98,7 +94,6 @@ export default function AccountPage() {
                 />
               </div>
 
-              {/* Bio */}
               <div>
                 <label className="block text-sm font-medium mb-1">Bio</label>
                 <textarea
@@ -110,9 +105,7 @@ export default function AccountPage() {
               </div>
             </div>
 
-            {/* Right Column */}
             <div className="space-y-4">
-              {/* Birthday */}
               <div>
                 <label className="block text-sm font-medium mb-1">Birthday</label>
                 <input
@@ -123,7 +116,6 @@ export default function AccountPage() {
                 />
               </div>
 
-              {/* Country */}
               <div>
                 <label className="block text-sm font-medium mb-1">Country</label>
                 <input
@@ -134,7 +126,6 @@ export default function AccountPage() {
                 />
               </div>
 
-              {/* Location */}
               <div>
                 <label className="block text-sm font-medium mb-1">Location</label>
                 <input
