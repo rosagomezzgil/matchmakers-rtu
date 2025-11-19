@@ -20,7 +20,6 @@ export default function AccountPage() {
       birthday: "1995-05-15",
       country: "Latvia",
       location: "Riga",
-      verified: true,
     };
   };
 
@@ -152,17 +151,6 @@ export default function AccountPage() {
                 />
               </div>
 
-              {/* Verified */}
-              <div className="flex items-center gap-3 pt-2">
-                <input
-                  type="checkbox"
-                  checked={userData.verified}
-                  onChange={(e) => handleInputChange("verified", e.target.checked)}
-                  className="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500"
-                  disabled
-                />
-                <label className="text-sm font-medium">Verified Account</label>
-              </div>
             </div>
           </div>
         </div>
