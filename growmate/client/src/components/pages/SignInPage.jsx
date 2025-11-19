@@ -2,17 +2,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx"; 
 import React, { useState } from 'react';
 
+// Sign-in page component
 export default function SignInPage() {
+
+  // get login function and status from AuthContext
   const { signIn, loading, error } = useAuth();
+
+  // used to navigate after login
   const navigate = useNavigate();
+
+  // simple form state for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // handle form submit
   const handleSignIn = async (e) => {
-    e.preventDefault();
-    const result = await signIn(email, password);
+    e.preventDefault(); // stop page reload
+    const result = await signIn(email, password); // try to log in
     if (result?.ok) {
-        navigate("/"); 
+        navigate("/");  // go to homepage when successful
     }
   };
 

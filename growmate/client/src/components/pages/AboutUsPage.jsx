@@ -1,3 +1,5 @@
+// using tailwind css for styling
+// rest remains simple
 export default function AboutUsPage() {
   return (
     <section className="min-h-screen bg-black text-white px-6 py-16 max-w-3xl mx-auto">

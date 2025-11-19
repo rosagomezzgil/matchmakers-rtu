@@ -2,24 +2,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx"; 
 import React, { useState } from 'react';
 
+// Sign-up page component
 export default function SignUpPage() {
-  const { signUp, loading, error } = useAuth(); 
+
+  // Get register function and status from AuthContext
+  const { signUp, loading, error } = useAuth();
+
+  // Used to navigate after registration
   const navigate = useNavigate();
+
+  // Local form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [formError, setFormError] = useState(null);
 
+  // Handle form submit
   const handleSignUp = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // stop page refresh
     setFormError(null);
 
+    // simple password check
     if (password !== confirmPassword) {
       setFormError('Passwords do not match.');
       return;
     }
-    
+
+    // call backend through AuthContext
     const result = await signUp(email, password);
+
+    // go to homepage when registration works
     if (result?.ok) {
       navigate("/");
     }
