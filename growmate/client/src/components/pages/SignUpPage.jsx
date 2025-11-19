@@ -26,17 +26,23 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-      <div className="max-w-md w-full p-8 space-y-8">
-        <h2 className="text-3xl font-bold text-center">Register</h2>
-        <p className="text-center text-gray-400">
-          Join GrowMate and start growing together.
-        </p>
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white flex items-center justify-center p-6">
+      <div className="max-w-md w-full p-10 space-y-10 rounded-3xl border border-gray-800 bg-gray-950/70 backdrop-blur-md shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
+        <div className="space-y-3 text-center">
+          <p className="text-sm tracking-[0.35em] uppercase text-gray-500">Growmate</p>
+          <h2 className="text-3xl font-semibold">Create an account</h2>
+          <p className="text-gray-400 text-sm">
+            Start matching with curated activities around you.
+          </p>
+        </div>
 
-        <form onSubmit={handleSignUp} className="space-y-6">
-          {(error || formError) && <p className="text-red-500 text-center">{error || formError}</p>}
-          {/* Email Feld */}
-          <div>
+        <form onSubmit={handleSignUp} className="space-y-5">
+          {(error || formError) && <p className="text-red-400 text-center text-sm">{error || formError}</p>}
+
+          <div className="space-y-1">
+            <label htmlFor="email" className="text-xs uppercase tracking-wide text-gray-500">
+              Email
+            </label>
             <input
               id="email"
               name="email"
@@ -44,13 +50,15 @@ export default function SignUpPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-green-500"
-              placeholder="Email"
+              className="w-full px-4 py-3 border border-gray-800 rounded-2xl bg-gray-900/60 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="you@example.com"
             />
           </div>
 
-          {/* Passwort Feld */}
-          <div>
+          <div className="space-y-1">
+            <label htmlFor="password" className="text-xs uppercase tracking-wide text-gray-500">
+              Password
+            </label>
             <input
               id="password"
               name="password"
@@ -58,13 +66,15 @@ export default function SignUpPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-green-500"
-              placeholder="Password"
+              className="w-full px-4 py-3 border border-gray-800 rounded-2xl bg-gray-900/60 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="Create a password"
             />
           </div>
           
-          {/* Passwort bestätigen */}
-          <div>
+          <div className="space-y-1">
+            <label htmlFor="confirm-password" className="text-xs uppercase tracking-wide text-gray-500">
+              Confirm password
+            </label>
             <input
               id="confirm-password"
               name="confirm-password"
@@ -72,27 +82,27 @@ export default function SignUpPage() {
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-green-500"
-              placeholder="Confirm Password"
+              className="w-full px-4 py-3 border border-gray-800 rounded-2xl bg-gray-900/60 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="Repeat password"
             />
           </div>
 
-          {/* Registrieren-Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-4 py-3 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-500"
+            className="w-full px-4 py-3 rounded-2xl bg-white text-black font-semibold hover:bg-gray-200 transition-colors disabled:bg-gray-500 disabled:text-white/70"
           >
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? 'Creating...' : 'Create account'}
           </button>
         </form>
 
-        <div className="text-sm text-center">
+        <div className="text-sm text-center text-gray-400">
+          <span>Already have an account? </span>
           <Link
             to="/signin"
-            className="font-medium text-green-500 hover:text-green-400"
+            className="font-semibold text-white hover:text-gray-200"
           >
-            Already have an account? Log in
+            Log in
           </Link>
         </div>
       </div>
