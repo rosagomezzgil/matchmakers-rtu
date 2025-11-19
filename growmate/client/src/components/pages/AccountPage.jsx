@@ -161,18 +161,18 @@ export default function AccountPage() {
               {saveMessage}
             </div>
           )}
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleSave}
-              className="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded font-semibold transition"
+              className="flex-1 px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition"
             >
-              Save Changes
+              Save changes
             </button>
             <button
               onClick={handleSignOut}
-              className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded font-semibold transition"
+              className="flex-1 px-6 py-3 border border-gray-400 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 transition"
             >
-              Sign Out
+              Sign out
             </button>
           </div>
         </div>
