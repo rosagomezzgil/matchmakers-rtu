@@ -10,11 +10,19 @@ export function SavedActivitiesProvider({ children }) {
     const saved = localStorage.getItem('savedActivities');
     return saved ? JSON.parse(saved) : [];
   });
+  const [joinedActivities, setJoinedActivities] = useState(() => {
+    const joined = localStorage.getItem('joinedActivities');
+    return joined ? JSON.parse(joined) : [];
+  });
 
   // Speichere in localStorage, wenn sich savedActivities ändert
   useEffect(() => {
     localStorage.setItem('savedActivities', JSON.stringify(savedActivities));
   }, [savedActivities]);
+
+  useEffect(() => {
+    localStorage.setItem('joinedActivities', JSON.stringify(joinedActivities));
+  }, [joinedActivities]);
 
   const normalizeId = (value) => {
     if (!value && value !== 0) return "";
@@ -48,6 +56,28 @@ export function SavedActivitiesProvider({ children }) {
     setSavedActivities([]);
   };
 
+  const joinActivity = (activity) => {
+    const normalizedId = normalizeId(activity.id);
+    const isAlreadyJoined = joinedActivities.some(
+      (joined) => normalizeId(joined.id) === normalizedId
+    );
+    if (!isAlreadyJoined) {
+      setJoinedActivities((prev) => [
+        ...prev,
+        { ...activity, id: normalizedId },
+      ]);
+      return true;
+    }
+    return false;
+  };
+
+  const leaveActivity = (activityId) => {
+    const normalizedId = normalizeId(activityId);
+    setJoinedActivities((prev) =>
+      prev.filter((activity) => normalizeId(activity.id) !== normalizedId)
+    );
+  };
+
   const isActivitySaved = (activityId) => {
     const normalizedId = normalizeId(activityId);
     return savedActivities.some(
@@ -55,12 +85,23 @@ export function SavedActivitiesProvider({ children }) {
     );
   };
 
+  const isActivityJoined = (activityId) => {
+    const normalizedId = normalizeId(activityId);
+    return joinedActivities.some(
+      (activity) => normalizeId(activity.id) === normalizedId
+    );
+  };
+
   const value = {
     savedActivities,
+    joinedActivities,
     saveActivity,
     removeActivity,
     clearAllActivities,
     isActivitySaved,
+    joinActivity,
+    leaveActivity,
+    isActivityJoined,
   };
 
   return (

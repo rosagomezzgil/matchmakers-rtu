@@ -3,7 +3,7 @@ import { ActivityCard } from "../widgets/ActivityCard.jsx";
 import { useSavedActivities } from "../../contexts/SavedActivitiesContext.jsx";
 
 export default function SavedPage() {
-  const { savedActivities, clearAllActivities } = useSavedActivities();
+  const { savedActivities, joinedActivities, clearAllActivities } = useSavedActivities();
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   // Filtere Aktivitäten basierend auf ausgewählter Kategorie
@@ -83,6 +83,21 @@ export default function SavedPage() {
           ))}
         </div>
       )}
+
+      <div className="mt-16">
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Activities you've joined</h2>
+        {joinedActivities.length === 0 ? (
+          <div className="text-center py-10 text-gray-500">
+            <p>No joined activities yet. Join an activity from the Discovery page to see it here.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {joinedActivities.map((activity) => (
+              <ActivityCard key={`joined-${activity.id}`} activity={activity} />
+            ))}
+          </div>
+        )}
+      </div>
       
     </div>
   );

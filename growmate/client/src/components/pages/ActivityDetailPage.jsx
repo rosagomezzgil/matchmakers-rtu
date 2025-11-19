@@ -52,7 +52,14 @@ const formatDateText = (isoDate) => {
 
 export default function ActivityDetailPage() {
   const { id } = useParams();
-  const { saveActivity, isActivitySaved, removeActivity } = useSavedActivities();
+  const {
+    saveActivity,
+    isActivitySaved,
+    removeActivity,
+    joinActivity,
+    leaveActivity,
+    isActivityJoined,
+  } = useSavedActivities();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -116,6 +123,7 @@ export default function ActivityDetailPage() {
   }, [id]);
 
   const saved = isActivitySaved(id);
+  const joined = isActivityJoined(id);
 
   const handleSave = () => {
     if (!activity) return;
@@ -136,9 +144,23 @@ export default function ActivityDetailPage() {
 
   const handleJoin = () => {
     if (!activity) return;
-    if (activity.status === "full") {
+    if (activity.status === "full" && !joined) {
       alert("This activity is already full!");
+      return;
+    }
+
+    if (joined) {
+      leaveActivity(id);
     } else {
+      joinActivity({
+        id: activity.id,
+        title: activity.title,
+        category: activity.category,
+        date: activity.date,
+        month: activity.month,
+        imageKey: activity.imageKey,
+        imageUrl: activity.imageUrl,
+      });
       alert(`You joined "${activity.title}"!`);
     }
   };
@@ -224,9 +246,12 @@ export default function ActivityDetailPage() {
             <button
               onClick={handleJoin}
               className={`px-6 py-2 rounded font-semibold text-white transition ${primaryColor}`}
-              disabled={activity.status === "full"}
             >
-              {activity.status === "full" ? "Activity Full" : "Join activity"}
+              {joined
+                ? "Leave activity"
+                : activity.status === "full"
+                ? "Activity Full"
+                : "Join activity"}
             </button>
           </div>
         </div>
