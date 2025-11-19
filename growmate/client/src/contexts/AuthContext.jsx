@@ -54,7 +54,7 @@ export function AuthProvider({ children }) {
     loading,
     error,
     signIn,
-    signUp, // <<< NEU
+    signUp, 
     signOut,
   };
 
