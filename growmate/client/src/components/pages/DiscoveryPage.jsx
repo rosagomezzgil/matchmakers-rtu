@@ -46,6 +46,48 @@ const formatDaySuffix = (day) => {
   }
 };
 
+const deriveDateFilterLabel = (date) => {
+  if (!date) return "";
+  const now = new Date();
+  const target = new Date(date);
+  const startOfToday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  );
+  const startOfTarget = new Date(
+    target.getFullYear(),
+    target.getMonth(),
+    target.getDate()
+  );
+  const diffMs = startOfTarget.getTime() - startOfToday.getTime();
+  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return "today";
+  if (diffDays === 1) return "tomorrow";
+  if (diffDays >= 2 && diffDays < 7) return "this week";
+  if (diffDays >= 7 && diffDays < 14) return "next week";
+  if (target.getMonth() === now.getMonth()) return "this month";
+  return "next month";
+};
+
+const deriveTimeOfDay = (date) => {
+  if (!date) return "all day";
+  const hour = new Date(date).getHours();
+  if (hour < 12) return "morning";
+  if (hour < 17) return "afternoon";
+  if (hour < 21) return "evening";
+  return "night";
+};
+
+const normalizeStatus = (status) => {
+  const value = (status || "").toLowerCase();
+  if (!value) return "open";
+  if (value === "active") return "open";
+  if (value === "cancelled" || value === "finished") return "full";
+  return value;
+};
+
 const transformActivity = (raw) => {
   if (!raw) return null;
   const date = raw.date ? parseInt(raw.date, 10) : null;
@@ -62,7 +104,9 @@ const transformActivity = (raw) => {
     title: raw.title,
     category: raw.category,
     location: raw.location,
-    status: raw.status ?? "open",
+    status: normalizeStatus(raw.status ?? raw.statusLabel),
+    dateFilter: raw.dateFilter ?? deriveDateFilterLabel(parsedDate),
+    timeOfDay: raw.timeOfDay ?? deriveTimeOfDay(parsedDate),
     month: derivedMonth ?? "",
     date: derivedDay ? formatDaySuffix(derivedDay) : "",
     imageUrl:
@@ -126,6 +170,16 @@ export default function DiscoveryPage() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const resetAllFilters = () => {
+    setFilters({
+      location: "",
+      date: "",
+      time: "",
+      category: "",
+      status: "",
+    });
   };
 
   const handleMouseEnter = (filterName) => {
@@ -204,6 +258,22 @@ export default function DiscoveryPage() {
       ) {
         return false;
       }
+      if (filters.date) {
+        if (
+          !activity.dateFilter ||
+          activity.dateFilter.toLowerCase() !== filters.date.toLowerCase()
+        ) {
+          return false;
+        }
+      }
+      if (filters.time) {
+        if (
+          !activity.timeOfDay ||
+          activity.timeOfDay.toLowerCase() !== filters.time.toLowerCase()
+        ) {
+          return false;
+        }
+      }
       if (
         filters.status &&
         activity.status &&
@@ -273,42 +343,53 @@ export default function DiscoveryPage() {
     // Hier wurde 'bg-white' und 'text-black' hinzugefügt, um den weißen Hintergrund zu setzen.
     <div className="pt-12 pb-16 min-h-screen bg-white text-black px-4 sm:px-8 lg:px-16">
       {/* Filterzeile */}
-      <div className="flex justify-center space-x-8 mb-20 text-gray-800 border-b border-gray-300 pb-2">
-        {filterOptions.map((filter) => (
-          <div
-            key={filter.name}
-            className="relative group"
-            onMouseEnter={() => handleMouseEnter(filter.name)}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button className="text-lg font-light uppercase tracking-wider hover:text-cyan-800 transition duration-150">
-              {filter.label}
-            </button>
+      <div className="flex items-center mb-20 text-gray-800 border-b border-gray-300 pb-2">
+        <div className="flex justify-center flex-1 space-x-8">
+          {filterOptions.map((filter) => (
+            <div
+              key={filter.name}
+              className="relative group"
+              onMouseEnter={() => handleMouseEnter(filter.name)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button className="text-lg font-light uppercase tracking-wider hover:text-cyan-800 transition duration-150">
+                {filter.label}
+              </button>
 
-            {/* Simuliertes Dropdown (Wird später durch echte Select-Felder ersetzt) */}
-            {hoveredFilter === filter.name && filter.options && (
-              <div
-                className="absolute left-0 mt-1 pt-1 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-20"
-                onMouseEnter={() => handleMouseEnter(filter.name)}
-                onMouseLeave={handleMouseLeave}
-              >
-                {filter.options.map((option) => (
-                  <div
-                    key={option}
-                    className="py-1 px-3 text-gray-700 hover:bg-gray-100 cursor-pointer capitalize"
-                    onClick={() => {
-                      // Hier würden Sie den tatsächlichen Wert setzen
-                      console.log(`Filter ${filter.name} set to: ${option}`);
-                      handleFilterChange(filter.name, option);
-                    }}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+              {/* Simuliertes Dropdown (Wird später durch echte Select-Felder ersetzt) */}
+              {hoveredFilter === filter.name && filter.options && (
+                <div
+                  className="absolute left-0 mt-1 pt-1 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-20"
+                  onMouseEnter={() => handleMouseEnter(filter.name)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {filter.options.map((option) => (
+                    <div
+                      key={option}
+                      className="py-1 px-3 text-gray-700 hover:bg-gray-100 cursor-pointer capitalize"
+                      onClick={() => {
+                        // Hier würden Sie den tatsächlichen Wert setzen
+                        console.log(`Filter ${filter.name} set to: ${option}`);
+                        handleFilterChange(filter.name, option);
+                      }}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex-shrink-0">
+          <button
+            type="button"
+            onClick={resetAllFilters}
+            className="text-xs tracking-widest uppercase text-gray-400 hover:text-black transition duration-150"
+          >
+            Clear all
+          </button>
+        </div>
       </div>
 
       {loading && (

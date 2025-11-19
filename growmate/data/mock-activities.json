@@ -1,0 +1,147 @@
+[
+  {
+    "title": "Visiting Mežaparks",
+    "category": "nature",
+    "description": "Spend a calm afternoon exploring the forest paths and lakeside views of Mežaparks.",
+    "location": "riga",
+    "date_time": "2025-10-10T15:00:00.000Z",
+    "capacity": 6,
+    "status": "open",
+    "dateFilter": "this week",
+    "timeOfDay": "afternoon",
+    "imageKey": "green"
+  },
+  {
+    "title": "Going to the Beach",
+    "category": "nature",
+    "description": "Sunny day escape to Jurmala beach with volleyball and picnic vibes.",
+    "location": "riga",
+    "date_time": "2025-10-18T11:00:00.000Z",
+    "capacity": 10,
+    "status": "open",
+    "dateFilter": "next week",
+    "timeOfDay": "morning",
+    "imageKey": "beach"
+  },
+  {
+    "title": "Museum Visit",
+    "category": "culture",
+    "description": "Guided tour through Berlin’s contemporary art highlights.",
+    "location": "berlin",
+    "date_time": "2025-10-23T13:00:00.000Z",
+    "capacity": 8,
+    "status": "open",
+    "dateFilter": "next week",
+    "timeOfDay": "afternoon",
+    "imageKey": "gallery"
+  },
+  {
+    "title": "Ski Trip to Austria",
+    "category": "sport",
+    "description": "Weekend ski adventure in the Austrian Alps for intermediate riders.",
+    "location": "vienna",
+    "date_time": "2025-10-28T07:30:00.000Z",
+    "capacity": 12,
+    "status": "full",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "ski"
+  },
+  {
+    "title": "Going on a Walk",
+    "category": "nature",
+    "description": "Casual morning walk through Riga’s Old Town and along the river.",
+    "location": "riga",
+    "date_time": "2025-11-02T08:00:00.000Z",
+    "capacity": 5,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "water"
+  },
+  {
+    "title": "Hiking the Alps",
+    "category": "nature",
+    "description": "Full-day alpine hike with panoramic views and picnic lunch.",
+    "location": "vienna",
+    "date_time": "2025-11-11T06:30:00.000Z",
+    "capacity": 10,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "mountain"
+  },
+  {
+    "title": "Mountain Biking",
+    "category": "sport",
+    "description": "Adrenaline-packed trail ride across Austrian forest paths.",
+    "location": "vienna",
+    "date_time": "2025-12-16T09:00:00.000Z",
+    "capacity": 8,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "sea"
+  },
+  {
+    "title": "Berlin City Trip",
+    "category": "travel",
+    "description": "Weekend discovery of Berlin’s iconic landmarks and hidden cafes.",
+    "location": "berlin",
+    "date_time": "2025-12-16T10:00:00.000Z",
+    "capacity": 14,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "berlin"
+  },
+  {
+    "title": "Hike Adventure",
+    "category": "nature",
+    "description": "Explore the dramatic coastal cliffs near Lisbon.",
+    "location": "lisbon",
+    "date_time": "2025-11-06T09:00:00.000Z",
+    "capacity": 7,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "cliff"
+  },
+  {
+    "title": "Sunset at Bottom Bay",
+    "category": "travel",
+    "description": "Relaxed evening watching the sunset over Bottom Bay.",
+    "location": "barbados",
+    "date_time": "2025-11-14T21:00:00.000Z",
+    "capacity": 15,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "night",
+    "imageKey": "bottom"
+  },
+  {
+    "title": "Surf Session",
+    "category": "sport",
+    "description": "Morning surf practice with a local coach in Porto.",
+    "location": "porto",
+    "date_time": "2025-11-19T07:00:00.000Z",
+    "capacity": 6,
+    "status": "full",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "swell"
+  },
+  {
+    "title": "Coffee Date",
+    "category": "social",
+    "description": "Cozy meet-up at Zurich’s favorite specialty coffee spot.",
+    "location": "zurich",
+    "date_time": "2025-12-30T14:00:00.000Z",
+    "capacity": 4,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "afternoon",
+    "imageKey": "coffee"
+  }
+]
+
