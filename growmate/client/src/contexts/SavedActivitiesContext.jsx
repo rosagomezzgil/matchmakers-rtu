@@ -5,7 +5,6 @@ const SavedActivitiesContext = createContext();
 export const useSavedActivities = () => useContext(SavedActivitiesContext);
 
 export function SavedActivitiesProvider({ children }) {
-  // Lade gespeicherte Aktivitäten aus localStorage beim Start
   const [savedActivities, setSavedActivities] = useState(() => {
     const saved = localStorage.getItem('savedActivities');
     return saved ? JSON.parse(saved) : [];
@@ -15,7 +14,6 @@ export function SavedActivitiesProvider({ children }) {
     return joined ? JSON.parse(joined) : [];
   });
 
-  // Speichere in localStorage, wenn sich savedActivities ändert
   useEffect(() => {
     localStorage.setItem('savedActivities', JSON.stringify(savedActivities));
   }, [savedActivities]);
@@ -30,7 +28,6 @@ export function SavedActivitiesProvider({ children }) {
   };
 
   const saveActivity = (activity) => {
-    // Prüfe, ob die Activity bereits gespeichert ist
     const normalizedId = normalizeId(activity.id);
     const isAlreadySaved = savedActivities.some(
       (saved) => normalizeId(saved.id) === normalizedId
@@ -40,9 +37,9 @@ export function SavedActivitiesProvider({ children }) {
         ...prev,
         { ...activity, id: normalizedId },
       ]);
-      return true; // Erfolgreich gespeichert
+      return true;
     }
-    return false; // Bereits gespeichert
+    return false; 
   };
 
   const removeActivity = (activityId) => {

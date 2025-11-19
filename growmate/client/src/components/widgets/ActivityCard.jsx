@@ -19,19 +19,16 @@ export function ActivityCard({ activity }) {
 
   return (
     <Link 
-      to={`/activity/${id}`} // Beispielpfad zur Detailseite
+      to={`/activity/${id}`} 
       className="block relative overflow-hidden rounded-xl shadow-lg aspect-[3/4] hover:shadow-xl transition-shadow duration-300"
     >
-      {/* Hintergrundbild */}
       <img
         src={imageUrl}
         alt={title}
         className="absolute inset-0 w-full h-full object-cover"
       />
-      {/* Dunkle Overlay für besseren Textkontrast */}
       <div className="absolute inset-0 bg-black/20"></div>
 
-      {/* Inhalt: Datum und Titel */}
       <div className="relative p-4 flex flex-col justify-end h-full text-white">
         <div className="text-right mb-1">
           <p className="text-5xl font-extrabold leading-none">{displayDate}</p>

@@ -6,7 +6,6 @@ export default function AccountPage() {
   const { signOut } = useAuth();
   const navigate = useNavigate();
   
-  // Lade gespeicherte Daten aus localStorage oder verwende Standardwerte
   const loadUserData = () => {
     const saved = localStorage.getItem('userAccountData');
     if (saved) {
@@ -26,7 +25,6 @@ export default function AccountPage() {
   const [userData, setUserData] = useState(loadUserData);
   const [saveMessage, setSaveMessage] = useState("");
 
-  // Lade Daten beim Mount
   useEffect(() => {
     const saved = loadUserData();
     setUserData(saved);
@@ -40,18 +38,14 @@ export default function AccountPage() {
   };
 
   const handleSave = () => {
-    // Speichere in localStorage
     localStorage.setItem('userAccountData', JSON.stringify(userData));
     
-    // Zeige Erfolgsmeldung
     setSaveMessage("Account settings saved successfully!");
     
-    // Entferne die Meldung nach 3 Sekunden
     setTimeout(() => {
       setSaveMessage("");
     }, 3000);
     
-    // TODO: Später API call to save user data
   };
 
   const handleSignOut = () => {

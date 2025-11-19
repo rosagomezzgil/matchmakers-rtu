@@ -15,10 +15,8 @@ export default function LandingPage() {
         zIndex: 0,
       }}
     >
-      {/* Overlay, damit Text sichtbar bleibt */}
       <div className="absolute inset-0 bg-black/50" />
 
-      {/* Inhalt */}
       <div className="relative z-10 text-center flex flex-col items-center h-full" style={{ zIndex: 10 }}>
         <div className="pt-80">
           <h1 className="text-5xl font-bold mb-8">Welcome to GrowMate</h1>
@@ -26,7 +24,6 @@ export default function LandingPage() {
             Find activities, meet new people and grow together.
           </p>
         </div>
-        {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-auto pb-80">
           <Link
             to="/signin"

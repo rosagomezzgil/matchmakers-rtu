@@ -1,15 +1,9 @@
-// client/src/services/AuthService.js
-// Dieses Modul verwaltet die Authentifizierung (Login/Register) und speichert das Token.
-// Es nutzt einen robusten Fallback, falls der API-Server nicht erreichbar ist.
-
 const API_BASE_URL = `${import.meta.env.VITE_API_URL ?? "http://localhost:3000"}/api/user`;
 
-// Funktion zum Speichern des JWT-Tokens (wird für Authentifizierung benötigt)
 const saveToken = (token) => {
   localStorage.setItem('authToken', token);
 };
 
-// Login-Funktion: ruft die API auf und speichert den erhaltenen Token.
 const login = async (email, password) => {
   const response = await fetch(`${API_BASE_URL}/login`, {
     method: "POST",
@@ -33,7 +27,6 @@ const login = async (email, password) => {
   return data;
 };
 
-// Registrierungs-Funktion: ruft die API auf und speichert den erhaltenen Token.
 const register = async (email, password) => {
   const response = await fetch(`${API_BASE_URL}/register`, {
     method: "POST",

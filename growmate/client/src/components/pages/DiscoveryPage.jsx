@@ -136,7 +136,6 @@ const ActivityCard = ({ activity }) => {
         </div>
       </div>
 
-      {/* Titel und Kategorie am unteren Rand - Textfarbe auf Weiß geändert */}
       <div className="absolute bottom-0 left-0 right-0 p-4 text-white text-center">
         <div className="text-xs font-semibold uppercase tracking-widest drop-shadow-[0_3px_8px_rgba(0,0,0,1)]">
           {activity.category}
@@ -150,7 +149,6 @@ const ActivityCard = ({ activity }) => {
   );
 };
 
-// Hauptkomponente: DiscoveryPage
 export default function DiscoveryPage() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -193,7 +191,7 @@ export default function DiscoveryPage() {
   const handleMouseLeave = () => {
     const timeout = setTimeout(() => {
       setHoveredFilter(null);
-    }, 200); // 200ms delay before closing
+    }, 200); 
     setCloseTimeout(timeout);
   };
 
@@ -234,7 +232,6 @@ export default function DiscoveryPage() {
     };
   }, []);
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (closeTimeout) {
@@ -243,7 +240,6 @@ export default function DiscoveryPage() {
     };
   }, [closeTimeout]);
 
-  // Einfache client-seitige Filterung (wird später auf Backend-Abfrage umgestellt)
   const filteredActivities = useMemo(() => {
     return activities.filter((activity) => {
       if (
@@ -285,7 +281,6 @@ export default function DiscoveryPage() {
     });
   }, [activities, filters]);
 
-  // Dies ist das Layout gemäß dem Figma-Design
   const filterOptions = [
     {
       name: "location",
@@ -340,9 +335,7 @@ export default function DiscoveryPage() {
   ];
 
   return (
-    // Hier wurde 'bg-white' und 'text-black' hinzugefügt, um den weißen Hintergrund zu setzen.
     <div className="pt-12 pb-16 min-h-screen bg-white text-black px-4 sm:px-8 lg:px-16">
-      {/* Filterzeile */}
       <div className="flex items-center mb-20 text-gray-800 border-b border-gray-300 pb-2">
         <div className="flex justify-center flex-1 space-x-8">
           {filterOptions.map((filter) => (
@@ -356,7 +349,6 @@ export default function DiscoveryPage() {
                 {filter.label}
               </button>
 
-              {/* Simuliertes Dropdown (Wird später durch echte Select-Felder ersetzt) */}
               {hoveredFilter === filter.name && filter.options && (
                 <div
                   className="absolute left-0 mt-1 pt-1 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-20"
@@ -368,7 +360,6 @@ export default function DiscoveryPage() {
                       key={option}
                       className="py-1 px-3 text-gray-700 hover:bg-gray-100 cursor-pointer capitalize"
                       onClick={() => {
-                        // Hier würden Sie den tatsächlichen Wert setzen
                         console.log(`Filter ${filter.name} set to: ${option}`);
                         handleFilterChange(filter.name, option);
                       }}

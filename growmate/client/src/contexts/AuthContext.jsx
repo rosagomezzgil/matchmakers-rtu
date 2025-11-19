@@ -10,7 +10,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // ECHTE LOGIN FUNKTION
   const signIn = async (email, password) => {
     setLoading(true);
     setError(null);
@@ -28,7 +27,6 @@ export function AuthProvider({ children }) {
     }
   };
   
-  // ECHTE REGISTRIER FUNKTION
   const signUp = async (email, password) => {
     setLoading(true);
     setError(null);
@@ -46,12 +44,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // ECHTE LOGOUT FUNKTION
   const signOut = () => {
     AuthService.logout();
     setIsLoggedIn(false);
-    // Optional: Navigation zur Landing Page
-    // navigate('/'); 
   };
   
   const value = {

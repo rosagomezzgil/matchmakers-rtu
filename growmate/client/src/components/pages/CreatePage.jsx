@@ -83,7 +83,6 @@ export default function CreatePage() {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         
-        {/* Erste Zeile: Titel und Kategorie */}
         <div className="flex flex-col sm:flex-row gap-6">
           <div className="flex-1">
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
@@ -120,7 +119,6 @@ export default function CreatePage() {
           </div>
         </div>
         
-        {/* Beschreibung */}
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
             Description
@@ -137,10 +135,8 @@ export default function CreatePage() {
           />
         </div>
 
-        {/* Dritte Zeile: Datum, Zeit, Kapazität, Schwierigkeit */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           
-          {/* Datum */}
           <div>
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">Date</label>
             <input
@@ -154,7 +150,6 @@ export default function CreatePage() {
             />
           </div>
 
-          {/* Zeit */}
           <div>
             <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">Time</label>
             <input
@@ -168,7 +163,6 @@ export default function CreatePage() {
             />
           </div>
 
-          {/* Kapazität */}
           <div>
             <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-1">Capacity</label>
             <input
@@ -183,7 +177,6 @@ export default function CreatePage() {
             />
           </div>
           
-          {/* Schwierigkeit */}
           <div>
             <label htmlFor="difficulty" className="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
             <select
@@ -201,7 +194,6 @@ export default function CreatePage() {
           </div>
         </div>
         
-        {/* Adresse */}
         <div>
           <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
             Address / Location
@@ -218,7 +210,6 @@ export default function CreatePage() {
           />
         </div>
 
-        {/* Submit Button */}
         <div className="pt-4">
           <button
             type="submit"

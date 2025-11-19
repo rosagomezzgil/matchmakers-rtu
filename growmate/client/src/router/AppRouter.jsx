@@ -14,7 +14,6 @@ import CreatePage from "../components/pages/CreatePage.jsx";
 import AccountPage from "../components/pages/AccountPage.jsx"; 
 import { useAuth } from "../contexts/AuthContext.jsx";
 
-// Komponente zur Umschaltung: / zeigt entweder Landing oder Discovery
 const HomeRoute = () => {
   const { isLoggedIn } = useAuth();
   return isLoggedIn ? <DiscoveryPage /> : <LandingPage />;
@@ -25,23 +24,18 @@ const AppRouter = () => {
     <Router>
       <Routes>
         
-        {/* ROUTE-BLOCK 1: Seiten OHNE Layout (Header) */}
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         
-        {/* ROUTE-BLOCK 2: Seiten MIT Layout */}
         <Route path="/" element={<Layout />}>
           
-          {/* Index-Route: Umschaltung Landing/Discovery */}
           <Route index element={<HomeRoute />} /> 
           
-          {/* Eingeloggte Routen: Saved, Create, Activity Detail, Account */}
           <Route path="saved" element={<SavedPage />} /> 
-          <Route path="create" element={<CreatePage />} /> {/* <<< PLATZHALTER ENTFERNT */}
+          <Route path="create" element={<CreatePage />} /> 
           <Route path="activity/:id" element={<ActivityDetailPage />} /> 
           <Route path="account" element={<AccountPage />} /> 
 
-          {/* Allgemeine Routen mit Layout */}
           <Route path="faq" element={<FAQPage />} />
           <Route path="about" element={<AboutUsPage />} />
           <Route path="contacts" element={<ContactsPage />} />
