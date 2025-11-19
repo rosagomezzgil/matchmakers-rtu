@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
 export default function CreatePage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -9,8 +13,10 @@ export default function CreatePage() {
     time: '',
     address: '',
     capacity: 2,
-    difficulty: 'low',
+    difficulty: 'easy',
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,17 +26,56 @@ export default function CreatePage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In einer echten App würde hier ein API-Call zum Backend gesendet werden:
-    // fetch('/api/activity/create', { method: 'POST', body: JSON.stringify(formData) })
-    console.log('Activity submitted:', formData);
+    setError("");
+    setSubmitting(true);
 
-    // TODO: Navigation zurück zur DiscoveryPage nach Erstellung
+    try {
+      const payload = {
+        title: formData.title.trim(),
+        category: formData.category,
+        description: formData.description,
+        date_time: new Date(`${formData.date}T${formData.time}`).toISOString(),
+        location: formData.address,
+        capacity: Number(formData.capacity),
+        difficulty: formData.difficulty,
+      };
+
+      const res = await fetch(`${API_BASE_URL}/api/activity/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to create activity");
+      }
+
+      // Clear form and go back to discovery
+      setFormData({
+        title: '',
+        category: '',
+        description: '',
+        date: '',
+        time: '',
+        address: '',
+        capacity: 2,
+        difficulty: 'easy',
+      });
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const categories = ['culture', 'nature', 'sport', 'social', 'travel', 'food'];
-  const difficulties = ['low', 'medium', 'high'];
+  const difficulties = ['easy', 'medium', 'hard'];
 
   return (
     <div className="py-8 max-w-4xl mx-auto">
@@ -177,9 +222,10 @@ export default function CreatePage() {
         <div className="pt-4">
           <button
             type="submit"
-            className="w-full px-6 py-3 rounded-full bg-gray-800 text-white font-semibold hover:bg-gray-700 transition-colors"
+            disabled={submitting}
+            className="w-full px-6 py-3 rounded-full bg-gray-800 text-white font-semibold hover:bg-gray-700 transition-colors disabled:bg-gray-500"
           >
-            Create Activity
+            {submitting ? "Creating..." : "Create Activity"}
           </button>
         </div>
       </form>
