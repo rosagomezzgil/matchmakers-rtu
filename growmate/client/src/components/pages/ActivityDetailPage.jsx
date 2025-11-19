@@ -99,9 +99,6 @@ export default function ActivityDetailPage() {
           capacity: data.capacity ?? 0,
           status: data.status ?? "open",
           difficulty: data.difficulty ?? "easy",
-          createdAt: data.createdAt
-            ? new Date(data.createdAt).toLocaleDateString()
-            : "",
           initialisedBy: data.organizer_id ? "community host" : "growmate",
           imageUrl:
             (data.imageKey && activityImages[data.imageKey]) || galleryImg,
@@ -202,10 +199,6 @@ export default function ActivityDetailPage() {
             <p className="flex justify-between">
               <span className="font-semibold">difficulty</span>
               <span>{activity.difficulty}</span>
-            </p>
-            <p className="flex justify-between">
-              <span className="font-semibold">created at</span>
-              <span>{activity.createdAt}</span>
             </p>
             <p className="flex justify-between">
               <span className="font-semibold">initialised by</span>
