@@ -1,17 +1,5 @@
 [
   {
-    "title": "Visiting Mežaparks",
-    "category": "nature",
-    "description": "Spend a calm afternoon exploring the forest paths and lakeside views of Mežaparks.",
-    "location": "riga",
-    "date_time": "2025-12-10T10:00:00.000Z",
-    "capacity": 6,
-    "status": "open",
-    "dateFilter": "this week",
-    "timeOfDay": "morning",
-    "imageKey": "green"
-  },
-  {
     "title": "Going to the Beach",
     "category": "nature",
     "description": "Sunny day escape to Jurmala beach with volleyball and picnic vibes.",
@@ -72,16 +60,16 @@
     "imageKey": "mountain"
   },
   {
-    "title": "Mountain Biking",
-    "category": "sport",
-    "description": "Adrenaline-packed trail ride across Austrian forest paths.",
-    "location": "vienna",
-    "date_time": "2024-12-08T09:00:00.000Z",
-    "capacity": 8,
+    "title": "Hike Adventure",
+    "category": "nature",
+    "description": "Explore the dramatic coastal cliffs near Lisbon.",
+    "location": "lisbon",
+    "date_time": "2024-11-18T09:00:00.000Z",
+    "capacity": 7,
     "status": "open",
-    "dateFilter": "next month",
+    "dateFilter": "this month",
     "timeOfDay": "morning",
-    "imageKey": "sea"
+    "imageKey": "cliff"
   },
   {
     "title": "Berlin City Trip",
@@ -94,18 +82,6 @@
     "dateFilter": "this month",
     "timeOfDay": "morning",
     "imageKey": "berlin"
-  },
-  {
-    "title": "Hike Adventure",
-    "category": "nature",
-    "description": "Explore the dramatic coastal cliffs near Lisbon.",
-    "location": "lisbon",
-    "date_time": "2024-11-18T09:00:00.000Z",
-    "capacity": 7,
-    "status": "open",
-    "dateFilter": "this month",
-    "timeOfDay": "morning",
-    "imageKey": "cliff"
   },
   {
     "title": "Sunset at Bottom Bay",
@@ -142,6 +118,30 @@
     "dateFilter": "next month",
     "timeOfDay": "afternoon",
     "imageKey": "coffee"
+  },
+  {
+    "title": "Mountain Biking",
+    "category": "sport",
+    "description": "Adrenaline-packed trail ride across Austrian forest paths.",
+    "location": "vienna",
+    "date_time": "2024-12-08T09:00:00.000Z",
+    "capacity": 8,
+    "status": "open",
+    "dateFilter": "next month",
+    "timeOfDay": "morning",
+    "imageKey": "sea"
+  },
+  {
+    "title": "Visiting Mežaparks",
+    "category": "nature",
+    "description": "Spend a calm afternoon exploring the forest paths and lakeside views of Mežaparks.",
+    "location": "riga",
+    "date_time": "2025-12-10T10:00:00.000Z",
+    "capacity": 6,
+    "status": "open",
+    "dateFilter": "this week",
+    "timeOfDay": "morning",
+    "imageKey": "green"
   }
 ]
 
